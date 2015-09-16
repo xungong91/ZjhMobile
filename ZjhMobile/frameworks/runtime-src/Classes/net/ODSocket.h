@@ -3,22 +3,20 @@
  * description:this sock is suit both windows and linux
  * design:odison
  * e-mail:odison@126.com>
- * 
  */
 
 #ifndef _ODSOCKET_H_
 #define _ODSOCKET_H_
 
-#include "cocos2d.h"
 #ifdef WIN32
 	#include <winsock2.h>
 	typedef int				socklen_t;
 #else
+    #include "cocos2d.h"
 	#include <sys/socket.h>
 	#include <netinet/in.h>
 	#include <netdb.h>
 	#include <fcntl.h>
-	#include "errno.h"
 	#include <unistd.h>
 	#include <sys/stat.h>
 	#include <sys/types.h>
@@ -31,18 +29,25 @@
 	//#pragma endregion
 #endif
 
-
-class ODSocket {
-
+class ODSocket
+{
 public:
 	ODSocket(SOCKET sock = INVALID_SOCKET);
-	~ODSocket();
+	virtual ~ODSocket();
 
+    //#pragma region just for win32
+    // Init winsock DLL
+    static int Init();
+    // Clean winsock DLL
+    static int Clean();
+    //#pragma endregion
+    
 	// Create socket object for snd/recv data
 	bool Create(int af, int type, int protocol = 0);
 
 	// Connect socket
 	bool Connect(const char* ip, unsigned short port);
+    
 	//#region server
 	// Bind socket
 	bool Bind(unsigned short port);
@@ -58,35 +63,25 @@ public:
 	int Send(const char* buf, int len, int flags = 0);
     
 	// SendTo socket
-	int Sendto(const char* buf,int len,const struct sockaddr * to, int tolen,int flags=0);
+	int SendTo(const char* buf, int len, const struct sockaddr * to, int tolen, int flags=0);
     
     // send udp broadcast
-    int Send_broadcast(const char* buf,int len,unsigned short port);
-    
-#if(CC_TARGET_PLATFORM==CC_PLATFORM_IOS)
-	int Recvfrom(char* buf,int len, struct sockaddr * to, unsigned int tolen,int flags=0);
-#else
-    int Recvfrom(char* buf,int len, struct sockaddr * to, int tolen,int flags=0);
-#endif
+    int SendBroadcast(const char* buf, int len, unsigned short port);
     
 	// Recv socket
 	int Recv(char* buf, int len, int flags = 0);
-
-	int Setsockopt();
-	int SetsockoptUdp();
+    
+#if(CC_TARGET_PLATFORM==CC_PLATFORM_IOS)
+    int RecvFrom(char* buf, int len, struct sockaddr * to, unsigned int tolen, int flags=0);
+#else
+    int RecvFrom(char* buf, int len, struct sockaddr * to, int tolen, int flags=0);
+#endif
 
 	// Close socket
 	int Close();
 
 	// Get errno
 	int GetError();
-	
-	//#pragma region just for win32
-	// Init winsock DLL 
-	static int Init();	
-	// Clean winsock DLL
-	static int Clean();
-	//#pragma endregion
 
 	// Domain parse
 	static bool DnsParse(const char* domain, char* ip);
@@ -97,8 +92,6 @@ public:
 
 protected:
 	SOCKET m_sock;
-
 };
 
 #endif
-
