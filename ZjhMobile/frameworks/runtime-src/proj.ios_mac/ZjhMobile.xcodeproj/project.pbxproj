@@ -48,6 +48,8 @@
 		509D4AE917EBB82000697056 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 509D4AE817EBB82000697056 /* AppKit.framework */; };
 		509D4AEB17EBB82600697056 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 509D4AEA17EBB82600697056 /* IOKit.framework */; };
 		9D007CB71BA93F7B00B26592 /* GameSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D007CB51BA93F7B00B26592 /* GameSocket.cpp */; };
+		9D007CD61BA970A300B26592 /* C2DXShareSDK.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D007CCD1BA970A300B26592 /* C2DXShareSDK.cpp */; };
+		9D007CD71BA970A300B26592 /* C2DXiOSShareSDK.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9D007CD21BA970A300B26592 /* C2DXiOSShareSDK.mm */; };
 		A92275421517C094001B78AA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A92275411517C094001B78AA /* QuartzCore.framework */; };
 		A92275441517C094001B78AA /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A92275431517C094001B78AA /* OpenGLES.framework */; };
 		A92275461517C094001B78AA /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A92275451517C094001B78AA /* OpenAL.framework */; };
@@ -174,6 +176,11 @@
 		509D4AEA17EBB82600697056 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		9D007CB51BA93F7B00B26592 /* GameSocket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameSocket.cpp; sourceTree = "<group>"; };
 		9D007CB61BA93F7B00B26592 /* GameSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameSocket.h; sourceTree = "<group>"; };
+		9D007CCD1BA970A300B26592 /* C2DXShareSDK.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = C2DXShareSDK.cpp; sourceTree = "<group>"; };
+		9D007CCE1BA970A300B26592 /* C2DXShareSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C2DXShareSDK.h; sourceTree = "<group>"; };
+		9D007CCF1BA970A300B26592 /* C2DXShareSDKTypeDef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C2DXShareSDKTypeDef.h; sourceTree = "<group>"; };
+		9D007CD11BA970A300B26592 /* C2DXiOSShareSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C2DXiOSShareSDK.h; sourceTree = "<group>"; };
+		9D007CD21BA970A300B26592 /* C2DXiOSShareSDK.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = C2DXiOSShareSDK.mm; sourceTree = "<group>"; };
 		A922753D1517C094001B78AA /* ZjhMobile iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ZjhMobile iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A92275411517C094001B78AA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		A92275431517C094001B78AA /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -303,6 +310,34 @@
 			path = mac;
 			sourceTree = "<group>";
 		};
+		9D007CC11BA970A300B26592 /* com */ = {
+			isa = PBXGroup;
+			children = (
+				9D007CC21BA970A300B26592 /* C2DXShareSDK */,
+			);
+			path = com;
+			sourceTree = "<group>";
+		};
+		9D007CC21BA970A300B26592 /* C2DXShareSDK */ = {
+			isa = PBXGroup;
+			children = (
+				9D007CCD1BA970A300B26592 /* C2DXShareSDK.cpp */,
+				9D007CCE1BA970A300B26592 /* C2DXShareSDK.h */,
+				9D007CCF1BA970A300B26592 /* C2DXShareSDKTypeDef.h */,
+				9D007CD01BA970A300B26592 /* ios */,
+			);
+			path = C2DXShareSDK;
+			sourceTree = "<group>";
+		};
+		9D007CD01BA970A300B26592 /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				9D007CD11BA970A300B26592 /* C2DXiOSShareSDK.h */,
+				9D007CD21BA970A300B26592 /* C2DXiOSShareSDK.mm */,
+			);
+			path = ios;
+			sourceTree = "<group>";
+		};
 		A92275321517C094001B78AA = {
 			isa = PBXGroup;
 			children = (
@@ -387,6 +422,7 @@
 		D4545214156E28EF00887EB5 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				9D007CC11BA970A300B26592 /* com */,
 				EA89A0B11BA709D80083BA20 /* net */,
 				D4545215156E28EF00887EB5 /* AppDelegate.cpp */,
 				D4545216156E28EF00887EB5 /* AppDelegate.h */,
@@ -587,10 +623,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D007CD71BA970A300B26592 /* C2DXiOSShareSDK.mm in Sources */,
 				509D4AC917EBB2AB00697056 /* RootViewController.mm in Sources */,
 				EA89A0D81BA714A50083BA20 /* NativeHelper.cpp in Sources */,
 				9D007CB71BA93F7B00B26592 /* GameSocket.cpp in Sources */,
 				EA89A0D41BA714980083BA20 /* jsb_cocos2dx_nativehelper.cpp in Sources */,
+				9D007CD61BA970A300B26592 /* C2DXShareSDK.cpp in Sources */,
 				D4545227156E28EF00887EB5 /* AppDelegate.cpp in Sources */,
 				EA89A0B41BA709D80083BA20 /* ODSocket.cpp in Sources */,
 				509D4AC817EBB2AB00697056 /* main.m in Sources */,
