@@ -34,11 +34,11 @@ void GameSocket::Close()
 }
 
 //连接
-bool GameSocket::Connect(string ip)
+bool GameSocket::Connect(string host, unsigned short port)
 {
     mODSocket.Init();
     mODSocket.Create(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-    mbConnected = mODSocket.Connect(ip.c_str(), 7999);
+    mbConnected = mODSocket.Connect(host.c_str(), port);
     if(mbConnected)
     {
         //创建接收服务器消息的线程
