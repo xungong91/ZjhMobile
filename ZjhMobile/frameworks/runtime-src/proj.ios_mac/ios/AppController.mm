@@ -31,6 +31,12 @@
 #import "RootViewController.h"
 #import "platform/ios/CCEAGLView-ios.h"
 
+//ShareSDK
+#import <ShareSDK/ShareSDK.h>
+#import "WXApi.h"      //微信
+#import <TencentOpenAPI/QQApiInterface.h>     //QQ互联
+#import <TencentOpenAPI/TencentOAuth.h>      //QQ互联
+
 @implementation AppController
 
 #pragma mark -
@@ -82,6 +88,13 @@ static AppDelegate s_sharedApplication;
     cocos2d::Director::getInstance()->setOpenGLView(glview);
 
     cocos2d::Application::getInstance()->run();
+    
+    //ShareSDK
+    //导入微信类型
+    [ShareSDK importWeChatClass:[WXApi class]];
+    //导入QQ类型
+    [ShareSDK importQQClass:[QQApiInterface class] tencentOAuthCls:[TencentOAuth class]];
+    
     return YES;
 }
 
@@ -123,6 +136,15 @@ static AppDelegate s_sharedApplication;
      */
 }
 
+//ShareSDK
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
+{
+    return [ShareSDK handleOpenURL:url sourceApplication:nil annotation:nil wxDelegate:nil];
+}
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    return [ShareSDK handleOpenURL:url sourceApplication:sourceApplication annotation:annotation wxDelegate:nil];
+}
 
 #pragma mark -
 #pragma mark Memory management
