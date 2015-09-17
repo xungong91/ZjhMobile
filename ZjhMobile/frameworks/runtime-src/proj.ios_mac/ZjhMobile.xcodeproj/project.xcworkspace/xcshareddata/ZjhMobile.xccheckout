@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>5A35137D-A9F6-48D1-B76A-CA750ACEA5BD</string>
+	<key>IDESourceControlProjectName</key>
+	<string>ZjhMobile</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>749DE79727BFA05BFFCFA3CDE7FA3427B436FCBD</key>
+		<string>https://github.com/xungong91/ZjhMobile</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>ZjhMobile/frameworks/runtime-src/proj.ios_mac/ZjhMobile.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>749DE79727BFA05BFFCFA3CDE7FA3427B436FCBD</key>
+		<string>../../../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/xungong91/ZjhMobile</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>749DE79727BFA05BFFCFA3CDE7FA3427B436FCBD</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>749DE79727BFA05BFFCFA3CDE7FA3427B436FCBD</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ZjhMobile</string>
+		</dict>
+	</array>
+</dict>
+</plist>
