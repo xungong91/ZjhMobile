@@ -26,7 +26,7 @@ public:
     //关闭连接
     void Close();
     //连接
-    bool Connect(string ip);
+    bool Connect(string host, unsigned short port);
     //向服务器发消息
     bool SendMsg(const char* msg, int msgLength, int flags = 0);
     
