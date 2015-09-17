@@ -12,11 +12,35 @@ var HelloWorldLayer = cc.Layer.extend({
         // ask the window size
         var size = cc.winSize;
 
-        mo.nativeHelper.setCallFunc(function(val){
-            cc.log(val);
-        });
+        //mo.nativeHelper.setCallFunc(function(val){
+        //    cc.log(val);
+        //});
+        //mo.nativeHelper.test();
 
-        mo.nativeHelper.test();
+        console.log(app.add(10, 12));
+
+        //var storagePath = (jsb.fileUtils ? jsb.fileUtils.getWritablePath() : "./");
+        //var filename = storagePath + "Person.proto";
+        //console.log(filename);
+
+        var protoString = jsb.fileUtils.getStringFromFile("res/packets_zjh.txt");
+
+        var builder = null;
+        try {
+            builder = protobufjs.loadProto(protoString)
+        } catch (e) {
+            console.log("error");
+            console.log(e + "error");
+        } finally {
+            console.log("finally");
+        }
+        var LoginRequest = builder.build("packet_zjh.LoginRequest");
+        var myLoginRequest = new LoginRequest();
+
+        myLoginRequest.username = "xungong";
+        myLoginRequest.password = "a123456";
+
+        console.log(myLoginRequest.username)
 
         return true;
     }
