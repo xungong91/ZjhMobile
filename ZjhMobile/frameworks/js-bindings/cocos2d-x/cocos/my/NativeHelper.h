@@ -26,6 +26,9 @@ namespace cocos2d
         void testSend1(const char *data);
         
         void setCallFunc(function<void (string)> callFunc);
+        
+        //简单加密
+        string codeData(string code);
     private:
         function<void (string)> mCallFunc;
         

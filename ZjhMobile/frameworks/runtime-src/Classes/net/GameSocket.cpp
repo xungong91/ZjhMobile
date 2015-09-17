@@ -28,7 +28,7 @@ GameSocket::~GameSocket()
 
 void GameSocket::test()
 {
-    Connect("192.168.2.21");
+    Connect("192.168.2.21", 7999);
 }
 
 void GameSocket::testSend(string buffer)
@@ -38,7 +38,8 @@ void GameSocket::testSend(string buffer)
     int msgId = 7;
     
     CCLOG(buffer.c_str());
-    string loads = codeData(buffer);
+//    string loads = codeData(buffer);
+    string loads = buffer;
     char* result;
     //º”√‹
     //◊º±∏∫œ≥…
@@ -71,9 +72,6 @@ string GameSocket::codeData( string data )
     size_t datalenght = data.length();
     for (size_t i = 0; i< datalenght; i++)
     {
-        char temp = data[i];
-        char test = temp ^ key[(i) % keylenght];
-        
         data[i]^= key[(i) % keylenght];
     }
     return data;

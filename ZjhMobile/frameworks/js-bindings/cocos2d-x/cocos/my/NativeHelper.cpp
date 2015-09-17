@@ -62,6 +62,10 @@ void NativeHelper::setCallFunc(function<void (string)> callFunc)
     mCallFunc = callFunc;
 }
 
+string NativeHelper::codeData(string code)
+{
+    return GameSocket::GetSingleton()->codeData(code);
+}
 
 
 

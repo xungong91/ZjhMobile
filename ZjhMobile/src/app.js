@@ -63,13 +63,13 @@ var HelloWorldLayer = cc.Layer.extend({
             //console.log(buffer.view[i]);
             string += String.fromCharCode(buffer.view[i]);
         }
-        //var codeString = this.codeData(string);
+        var codeString = mo.nativeHelper.codeData(string);
 
         var arrayBuffer = buffer.toArrayBuffer();
         //console.log(myLoginRequest.toArrayBuffer() + "");
         console.log(myLoginRequest.toBase64());
 
-        mo.nativeHelper.testSend(string);
+        mo.nativeHelper.testSend(codeString);
         //mo.nativeHelper.testSend1(arrayBuffer);
 
         //var YourMessage = builder.build("packet.LoginFromHTTPRequest");

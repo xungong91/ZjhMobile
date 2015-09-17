@@ -21,7 +21,6 @@ public:
     void test();
     void testSend(string buffer);
     void testSend1(const char *data);
-    string codeData( string data );
     
     //关闭连接
     void Close();
@@ -29,7 +28,8 @@ public:
     bool Connect(string host, unsigned short port);
     //向服务器发消息
     bool SendMsg(const char* msg, int msgLength, int flags = 0);
-    
+    //简单加密
+    string codeData( string data );
 private:
     //接收服务器消息
     void ReceiveData();
