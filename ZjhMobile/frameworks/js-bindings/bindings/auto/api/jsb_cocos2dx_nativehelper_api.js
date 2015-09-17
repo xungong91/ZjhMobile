@@ -29,6 +29,26 @@ func
 },
 
 /**
+ * @method testSend1
+ * @param {char} arg0
+ */
+testSend1 : function (
+char 
+)
+{
+},
+
+/**
+ * @method testSend
+ * @param {String} arg0
+ */
+testSend : function (
+str 
+)
+{
+},
+
+/**
  * @method singleton
  * @return {cc.NativeHelper}
  */

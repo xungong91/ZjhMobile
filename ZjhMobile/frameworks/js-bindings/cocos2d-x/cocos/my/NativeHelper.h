@@ -22,6 +22,9 @@ namespace cocos2d
         static NativeHelper *singleton();
         
         string test();
+        void testSend(string buffer);
+        void testSend1(const char *data);
+        
         void setCallFunc(function<void (string)> callFunc);
     private:
         function<void (string)> mCallFunc;

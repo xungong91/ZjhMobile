@@ -18,6 +18,11 @@ public:
     GameSocket();
     virtual ~GameSocket();
     
+    void test();
+    void testSend(string buffer);
+    void testSend1(const char *data);
+    string codeData( string data );
+    
     //关闭连接
     void Close();
     //连接

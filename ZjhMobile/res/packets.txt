@@ -1,0 +1,1739 @@
+package packet;
+
+message LoginRequest {
+	required string username = 1;
+	required string password = 2;
+}
+
+enum Gender {
+	Male = 0;
+	Female = 1;
+	Unknown = 2;
+}
+
+message User {
+    required string userid = 1; //用户userid
+	required string nickname = 2;
+	required Gender gender = 3;
+	required int32 diamonds = 4;
+	required string avatar = 5;
+	optional int32 level = 6;
+	optional int32 exp = 7;
+	optional int32 exp_next_level = 8;
+	optional int32 win_rate = 9;
+	optional int32 task_title = 10; // 战功头衔, 0 表示没有
+	optional int32 rank_title = 11; // 区域第一头衔 0 表示没有
+	optional int32 fame_level = 12; // 声望等级	
+	optional int32 vip_level  = 13; // VIP等级, 0 表示不是VIP
+	optional int32 win_double_card_state = 14;//金币加倍状态 1：加倍 0：不加倍
+	optional int32 lost_half_card_state = 15;//金币减半状态 1：减半 0：不减半
+	optional int32 exp_double_card_state = 16;//经验加倍剩余时间 0：没有，其他是具体剩余的秒
+	optional int32 skin_no = 17;//用户皮肤编号，没有为默认
+	optional int32 sz_no = 18;//用户骰子编号，没有为默认
+	optional int32 sz_left_time = 19;//用户试用骰子试用剩余时间 秒
+	repeated int32 items_no = 20 [packed=true];//用户拥有的道具 除了钻石，都在这个里面，包括得到的鲜花鸡蛋
+	repeated int32 items_num = 21 [packed=true];//对应道具的数量
+}
+
+enum UserMessageType {
+	systemBroardcast = 0;
+	systemPrivateMsg = 1;
+	makeFriendRequest = 2;
+	privateRoomInvitation = 3;
+	privateRoomResult = 4;
+	matchPrize = 5;
+	begCoins = 6;
+	giveCoins = 7;
+	prizedMessage = 8;
+	txtMessage = 9;
+}
+
+enum MJRank{
+	Junior = 0;
+	Medium = 1;
+	Senior = 2;	
+	DiaRank = 3;//钻石场
+}
+
+message LoginResponse {
+	enum LoginResponseCode {
+		Ok = 0;
+		Forbidden = 1;
+		AreaBanned = 2;
+		NoSuchUserPass = 3;
+		OldPlayerKicked = 4;
+	}
+	required LoginResponseCode code = 1;
+	optional string session_id = 2;
+	optional string ingame_path = 3;
+	optional User user = 4;
+	optional bool seen_tutorial = 5;
+	optional int32 coins_rank = 6;
+	repeated UserMessageType msg_types = 7 [packed = true];
+	repeated bool has_unread_msg = 8 [packed = true];
+	optional bool signed = 9;
+	optional bool has_task_prize = 10;
+	optional InviteStatus invite_status  = 11;
+	optional MJRank rank = 12; //最后进入的房间等级 add by rjcb 20150720
+	optional bool TelCardFlag = 13;//电话卡活动开关 true为开启活动，否则为关闭活动
+}
+
+message LoginFromHTTPRequest {
+	required string cookie = 1;
+}
+
+enum MJRule {
+	Rule3233 = 0;
+	RuleLaiziPi = 1;
+}
+
+
+
+message JoinFreeMJRequest {
+	required string session_id = 1;
+	required MJRule rule = 2;
+	optional MJRank rank = 3 [default = Junior];
+}
+
+message MJCardGroup {
+	enum MJGroupType {
+		Eat = 0;
+		Triple = 1;
+		Quadruple = 2;
+		SingleQuadruple = 3;
+		HiddenQuadruple = 4;
+	}
+	
+	required MJGroupType group_type = 1;
+	repeated int32 cards = 2 [packed=true];
+}
+
+enum MJWinTop {
+	TopNone = 0;
+	TopGold = 1;
+	TopDiamond = 2;
+}
+	
+message MJMyStats {
+	required User user_info = 1;
+	repeated int32 inhand_cards = 2 [packed=true];
+	repeated int32 dead_cards = 3 [packed=true];
+	repeated MJCardGroup open_groups = 4;
+	optional int32 direction = 5;
+	optional int32 available_actions = 6;
+	optional MJWinTop win_top = 7;
+	optional int32 win_points = 8;
+	optional int32 last_inhand_step = 9;
+}
+
+message MJOtherPlayerStats {
+	required User user_info = 1;
+	required int32 direction = 2;
+	optional int32 inhand_cards = 3;		
+	repeated int32 dead_cards = 4 [packed=true];
+	repeated MJCardGroup open_groups = 5;
+}
+
+enum MJGameStage {
+	Initing = 0;
+	Shuffling = 1;
+	PostDraw = 2;
+	PostPlay = 3;
+	Resting = 4;
+}
+
+message MJGameStat {
+	required int32 timeout_secs = 1;
+	required int32 host_player = 2;
+	required MJMyStats my_stats = 3;
+	required int32 round = 4;
+	required int32 step = 5;
+	optional int32 card54 = 6;
+	optional int32 rob_quadruple_card = 7;
+	optional int32 current_player = 8;
+	optional int32 last_card_player = 9;
+	repeated MJOtherPlayerStats player_stats = 10;
+	optional int32 base_point = 11; // 底金
+	optional int32 rate = 12; // 倍率
+}
+
+message JoinFreeMJResponse {
+	enum JoinFreeMJResponseCode {
+		Ok = 0;
+		MinimumCoinsRequired = 1;
+		MinimumDiamondRequired = 2;
+		NoTableAvail = 3;
+	}
+	
+	required JoinFreeMJResponseCode code = 1;
+	optional bool reconnected_user = 2;
+	optional int32 min_coins = 3;
+	optional int32 animation_secs_left = 4;
+	optional int32 wait_secs = 5;
+	optional int32 table_id = 6;
+	optional MJGameStat game_stats = 7;
+	optional MJGameStage stage = 8;
+	optional MJRule rule = 9;
+	optional bool has_basic_living = 10; // 可以领取低保
+	optional int32 basic_living_all_times = 11; // 可以领取低保次数
+	optional int32 basic_living_use_times = 12; // 已经领取低保次数
+	optional int32 basic_living_coins = 13; // 领取低保金额
+	optional MJRank rank_request = 14; // 请求进入的房间等级，金币大于60000请求进入初级房会被自动重置到中级房
+	optional MJRank rank = 15; //最后进入的房间等级
+	optional int32 sz1 = 16;//当前牌桌的骰子1
+    optional int32 sz2 = 17;//当前牌桌的骰子2
+}
+
+message MJGameChange {
+	enum MJGameChangeCode {
+		InhandAdded = 0;
+		InhandRemoved = 1;
+		OpenAdded = 2;
+		OpenRemoved = 3;
+		DeadAdded = 4;
+		DeadRemoved = 5;
+	}
+	
+	required MJGameChangeCode code = 1;
+	required int32 direction = 2;
+	repeated int32 cards = 3 [packed=true];
+	optional MJCardGroup card_group = 4;
+}
+
+message MJRoundStartedEvent {
+	required int32 table_id = 1;
+	required int32 SZ1 = 2;//随机骰子1点数
+	required int32 SZ2 = 3;//随机骰子2点数
+	required MJGameStat stats = 4;
+}
+
+message MJPlayerLoseWin {
+	required int32 doubles = 1;
+	required int32 points_delta = 2;
+	optional int32 dia_delta = 3;//增加的钻石数目
+	optional int32 CJ_times_delta = 4;//增加的抽奖次数
+	optional int32 BX_exp_delta = 5;//增加的能量值
+	optional int32 Coupons_delta = 6;//增加的奖券值
+	optional int32 TelCard1_delta = 7;//增加的1元电话卡
+	optional int32 TelCard2_delta = 8;//增加的2元电话卡
+}
+
+message ExpChange{
+	required int32 exp = 1; // 经验变化值
+	optional int32 level = 2; // 只有升级是才有
+	
+}
+
+message MJRoundEndedEvent {
+	enum MJGameWinType {
+		NoWin = 0;
+		LittleWin = 1;
+		AllWind = 2;
+		All258 = 4;
+		AllOneSuite = 8;
+		AllTriples = 16;
+		AllOthers = 32;
+		LastDrawableCard = 64;
+		WinQuadrupleCard = 128;
+		QuadrupleRobbery = 256;
+	}
+	
+	required int32 table_id = 1;
+	required int32 winner = 2;
+	required int32 quitter = 3;
+	required int32 prev_host = 4;
+	required int32 timeout_secs = 5;
+	required int32 my_direction = 6;
+	optional int32 win_type = 7;
+	optional MJWinTop win_top = 8;
+	optional int32 loser = 9;
+	optional bool win_hard = 10;
+	optional int32 card_to_win = 11;
+	repeated MJMyStats player_stats = 12;
+	repeated MJPlayerLoseWin lose_win = 13;
+	optional ExpChange exp_change = 14;
+}
+
+enum MJAction {
+	Skip = 0;
+	Eat = 1;
+	Triple = 2;
+	Quadruple = 3;
+	SingleQuadruple = 4;
+	HiddenQuadruple = 5;
+	Triple2Quadruple = 6;
+	PlayCard = 7;
+	Win = 8;
+	WinBySelf = 9;
+	Leave = 10;
+	ForceQuit = 11;
+	ContinuePlay = 12;
+}
+
+message MJRoundChangedEvent {
+	required MJGameStage stage = 1;
+	required int32 timeout_secs = 2;
+	required int32 step = 3;
+	required int32 initiator = 4;
+	required MJAction initial_action = 5;
+	required int32 current_player = 6;
+	required int32 available_action = 7;
+	required bool timeouted = 8;
+	repeated MJGameChange changes = 9;
+	optional MJWinTop win_top = 10;
+	optional int32 win_points = 11;
+}
+
+message MJPlayerChangedEvent {
+	required int32 table_id = 1;
+	repeated User players = 2;
+}
+
+message MJKickEvent {
+	enum MJKickEventCode {
+		KickedNoCoins = 0;
+		KickedIPConflict = 1;
+		KickedTimeout = 2;
+		KickedNoEnoughDiamond = 3;
+	}
+	
+	required int32 table_id = 1;
+	required MJKickEventCode reason = 2;
+}
+
+message MJActionRequest {
+	required int32 table_id = 1;
+	required MJAction action = 2;
+	optional int32 round = 3;
+	optional int32 step = 4;
+	repeated int32 cards = 5 [packed = true];
+}
+
+message MJActionResponse {
+	enum MJActionResult {
+		Ok = 0;
+		Fail = 1;
+		Waiting = 2;
+	}
+	
+	required MJActionResult code = 1;
+	required MJAction action = 2;
+}
+
+message PredefinedChat {
+	required int32 msgId = 1;
+}
+
+message PredefinedChatEvent {
+	required string nick = 1;
+	required int32 msgId = 2;
+}
+
+message UserNotificationRequest{//请求游戏服务器公告信息
+}
+
+message UserNotification {
+    optional string title = 1;
+	required string msg = 2;
+	required string msg_time = 3;
+	required string RGB_title = 4;
+	required string RGB_text = 5;
+	
+}
+
+message KickoutByNewLoginEvent {
+}
+
+message MakeFriendRequest {
+	required string session_id = 1;
+	required string nickname = 2;
+	optional string userid = 3;
+}
+
+message MakeFriendResponse {
+	enum MakeFriendCode {
+		Ok = 0;
+		RequestSent = 1;
+		CantMakeFriendWithSelf = 2;
+		NoSuchUser = 3;
+		AlreadyFriend = 4;
+	}
+	required MakeFriendCode code = 1;
+}
+
+message MakeFriendRequestEvent {
+	required int32 msg_id = 1;
+	required string sender_nickname = 2;
+	required string msg_time = 3;
+	optional string userid = 4;
+}
+
+message ConfirmMakeFriendRequest {
+	required int32 msg_id = 1;
+}
+
+message ConfirmMakeFriendResponse {
+	enum ConfirmMakeFriendCode {
+		Ok = 0;
+		NoSuchMsg = 1;
+	}
+	required ConfirmMakeFriendCode code = 1;
+}
+
+message ConfirmMakeFriendEvent {
+	required string friend_nickname = 1;
+	optional string userid = 2;
+}
+
+message CommonError {
+	enum CommonErrorCode {
+		SessionLost = 1;
+		UnknownError = 2;
+		ServerMaintenance = 3;
+		ServerBusy = 4;
+	}
+	required CommonErrorCode code = 1;
+}
+
+message CreatePrivateRoomRequest {
+	required string session_id = 1;
+	required MJRule rule = 2;
+	required int32 base_point = 3;
+	required int32 win_top = 4;
+	required int32 min_win_doubles = 5;
+	required int32 duration = 6;
+}
+
+message CreatePrivateRoomResponse {
+	enum CreatePrivateRoomCode {
+		Ok = 0;
+		MoneyNotEnough = 1;
+		BadParams = 2;
+		InAnotherRoomOrGame = 3;
+		CardNotEnough = 4;
+	}
+	required CreatePrivateRoomCode code = 1;
+	optional int32 room_id = 2;
+	optional string password = 3;
+	optional int32 diamonds = 4;
+	optional int32 cards = 5;
+}
+
+enum FriendKind {
+	AllFriends = 0;
+	CoinGiveesToday = 1;
+	CoinBeggeesToday = 2;
+}
+
+message GetFriendsRequest {
+	required FriendKind friend_kind = 1;
+}
+
+message Friend {
+	required string userid = 1;
+	required string nickname = 2;
+	required string area = 3;
+	optional int32 win_rate = 4;
+}
+
+message GetFriendsResponse {
+	required FriendKind friend_kind = 1;
+	repeated Friend friends = 2;
+}
+
+message InviteToPrivateRoomRequest {
+	required string friend_nick = 1;
+	optional string userid = 2;
+}
+
+message InviteToPrivateRoomResponse {
+	enum InviteToPrivateRoomCode {
+		InvitationSent = 0;
+		NotInRoom = 1;
+		NoSuchFriend = 2;
+	}
+	required InviteToPrivateRoomCode code = 1;
+}
+
+message InviteToPrivateRoomEvent {
+	required int32 room_id = 1;
+	required string nickname = 2;
+	required string password = 3;
+	required string msg_time = 4;
+	required int32 msg_id = 5;
+	optional string userid = 6;
+}
+
+message JoinPrivateRoomRequest {
+	required string session_id = 1;
+	required int32 room_id = 2;
+	required string password = 3;
+}
+
+message JoinPrivateRoomResponse {
+	enum JoinPrivateRoomCode {
+		Ok = 0;
+		InARoomOrGame = 1;
+		RoomIdPasswordErr = 2;
+		InBlacklist = 3;
+		RoomFull = 4;
+		RoomExpiring = 5;
+	}
+	required JoinPrivateRoomCode code = 1;
+	optional MJRule rule = 2;
+	optional int32 base_point = 3;
+	optional int32 win_top = 4;
+	optional int32 min_win_doubles = 5;
+	optional int32 seconds_left = 6;
+	optional string owner_nick = 7;
+	optional string password = 8;
+}
+
+message LeavePrivateRoomRequest {
+	required string session_id = 1;
+}
+
+message FreeChatRequest {
+	required string msg = 1;
+}
+
+message PrivateRoomEvent {
+	enum RoomEventCode {
+		FreeChat = 0;
+		PredefinedChat = 1;
+		Kicked = 2;
+		KickDismissed = 3;
+		Gagged = 4;
+		GagDismissed = 5;
+		EnterRoom = 6;
+		LeaveRoom = 7;
+		TimeAlert = 8;
+		TimeContinued = 9;
+		WatchDisallowed = 10;
+		WatchAllowed = 11;
+		ChatDisallowed = 12;
+		ChatAllowed = 13;
+		StartWatching = 14;
+	}
+	required string initiator = 1;
+	required RoomEventCode event_code = 2;
+	required string content = 3;
+	optional string userid = 4;	//content为对应玩家的昵称时 userid为对应的userid
+}
+
+message WatchPlayerRequest {
+	required string player_nickname = 1;
+	optional string userid = 2;
+}
+
+message WatchPlayerResponse {
+	enum WatchPlayerCode {
+		Ok = 0;
+		PlayerNotInRoom = 1;
+		TargetNotInRoom = 2;
+		NotAllowed = 3;
+	}
+	required WatchPlayerCode code = 1;
+	optional string player_nickname = 2;
+	optional string userid = 3;
+}
+
+message AddPrivateRoomTimeRequest {
+	required int32 minutes = 1;
+}
+
+message AddPrivateRoomTimeResponse {
+	enum AddPrivateRoomTimeCode {
+		Ok = 0;
+		NoRight = 1;
+		NoMoney = 2;
+		BadTime = 3;
+	}
+	required AddPrivateRoomTimeCode code = 1;
+	optional int32 max_minutes = 2;
+	optional int32 diamonds = 3;
+}
+
+message ManagePrivateRoomPlayerRequest {
+	enum ManagerPrivateRoomCode {
+		Kick = 0;
+		RemoveFromBlacklist = 1;
+		Gag = 2;
+		RemoveGag = 3;
+	}
+	required ManagerPrivateRoomCode code = 1;
+	required string player_nickname = 2;
+	optional string userid = 3;
+}
+
+message ManagePrivateRoomPlayerResponse {
+	enum ManagerPrivateRoomRespCode {
+		Ok = 0;
+		NoRight = 1;
+		TargetNotInRoom = 2;
+	}
+	required ManagerPrivateRoomRespCode code = 1;
+	required string player_nickname = 2;
+	optional string userid = 3;
+
+}
+
+enum PrivateRoomPlayersKind {
+	All = 0;
+	Blacklist = 1;
+	Gagged = 2;
+	MyGagged = 3;
+	MyNoWatch = 4;
+	MyWatching = 5;
+	WatchingMe = 6;
+}
+
+message GetPrivateRoomPlayersRequest {
+	required PrivateRoomPlayersKind kind = 1;
+}
+
+message GetPrivateRoomPlayersResponse {
+	enum GetPrivateRoomPlayersCode {
+		Ok = 0;
+		NotInRoom = 1;
+		NoRight = 2;
+	}
+	required GetPrivateRoomPlayersCode code = 1;
+	required PrivateRoomPlayersKind kind = 2;
+	repeated string player_nicknames = 3;
+	repeated string palyer_userids = 4;
+}
+
+enum AllowActionCode {
+	AllowWatch = 0;
+	DisallowWatch = 1;
+	AllowChat = 2;
+	DisallowChat = 3;
+}
+
+message AllowPrivateRoomPeerRequest {
+	required AllowActionCode code = 1;
+	required string player_nickname = 2;
+	optional string userid = 3;
+}
+
+message AllowPrivateRoomPeerResponse {
+	enum AllowPrivateRoomPeerCode {
+		Ok = 0;
+		PlayerNotInRoom = 1;
+		NicknameError = 2;
+	}
+	required AllowPrivateRoomPeerCode resp_code = 1;
+	required AllowActionCode action_code = 2;
+	required string player_nickname = 3;
+	optional string userid = 4;
+}
+
+message PrivateRoomPlayerStat {
+	required string nickname = 1;
+	required int32 total_rounds = 2;
+	required int32 win_rounds = 3;
+	required int32 points_delta = 4;
+	optional string userid = 5;
+}
+
+message GetPrivateRoomStatsRequest {
+}
+
+message GetPrivateRoomStatsResponse {
+	enum GetPrivateRoomStatsCode {
+		Ok = 0;
+		NotInRoom = 1;
+	}
+	required GetPrivateRoomStatsCode code = 1;
+	repeated PrivateRoomPlayerStat stats = 2;
+}
+
+message PrivateRoomEndedEvent {
+	required int32 room_id = 1;
+	repeated PrivateRoomPlayerStat stats = 2;
+}
+
+enum GiveConsumeBegCoinsCode {
+	Ok = 0;
+	NotFriend = 1;
+	TooManyTimes = 2;
+	NoSuchCoinGiven = 3;
+}
+
+message GiveCoinsRequest {
+	required string friend_nick = 1;
+	optional string userid = 2;
+}
+
+message GiveCoinsResponse {
+	required GiveConsumeBegCoinsCode code = 1;
+	required string friend_nick = 2;
+	optional string userid = 3;
+}
+
+message GiveCoinsEvent {
+	required int32 msg_id = 1;
+	required string giver_nick = 2;
+	required string given_time = 3;
+	optional string userid = 4;
+}
+
+message GetCoinGivensRequest {
+}
+
+message GetCoinGivensResponse {
+	repeated GiveCoinsEvent givens = 4;
+}
+
+message ConsumeCoinGivenRequest {
+	required int32 msg_id = 1;
+}
+
+message ConsumeCoinGivenResponse {
+	required GiveConsumeBegCoinsCode code = 1;
+	required int32 msg_id = 2;
+}
+
+message BegCoinsRequest {
+	required string friend_nick = 1;
+	optional string userid = 2;
+}
+
+message BegCoinsResponse {
+	required GiveConsumeBegCoinsCode code = 1;
+	required string friend_nick = 2;
+	optional string userid = 3;
+}
+
+message BegCoinsEvent {
+	required int32 event_id = 1;
+	required string beggar_nick = 2;
+	required string beg_time = 3;
+	optional string userid = 4;
+}
+
+message GetCoinBegsRequest {
+	required int32 start_pos = 1;
+	required int32 end_pos = 2;
+}
+
+message GetCoinBegsResponse {
+	required int32 start_pos = 1;
+	required int32 total_begs = 2;
+	repeated BegCoinsEvent begs = 3;
+}
+
+message RemoveCoinBegRequest {
+	required int32 event_id = 1;
+}
+
+message RemoveCoinBegResponse {
+	required bool ok = 1;
+	required int32 event_id = 2;
+}
+
+message GetUserMessageRequest {
+	required string session_id = 1;
+	required int32 start_pos = 2;
+	required int32 end_pos = 3;
+	repeated UserMessageType msg_types = 4 [packed=true]; 
+}
+
+message UserMessage {
+	required UserMessageType msg_type = 1;
+	required int32 msg_id = 2;
+	required bool has_read = 3;
+	required string sender_nick = 4;
+	required string json_params = 5;
+	required string msg_time = 6;
+}
+
+message GetUserMessageResponse {
+	required int32 start_pos = 1;
+	repeated UserMessageType msg_types = 2 [packed=true];
+	required int32 total_messages = 3;
+	repeated UserMessage messages = 4;
+}
+
+message UserMessageActionRequest {
+	enum UserMessageActionCode {
+		Delete = 0;
+		MarkAsRead = 1;
+		PickItem = 2;
+	}
+	required UserMessageActionCode code = 1;
+	required int32 msg_id = 2;
+}
+
+message UserMessageActionResponse {
+	enum UserMessageActRespCode {
+		Ok = 0;
+		NoSuchData = 1;
+		ItemAlreadyPicked = 2;
+		ItemNotExist = 3;
+	}
+	required UserMessageActRespCode code = 1;
+	required int32 msg_id = 2;
+	repeated CurrencyType item_types = 3 [packed=true];
+	repeated int32 item_amounts = 4 [packed=true];
+	optional UserMessageActionRequest.UserMessageActionCode action = 5;
+}
+
+message GetPointMatchEventRequest {
+}
+
+message PointMatchPlayer {
+	required string nickname = 1;
+	required int32 points = 2;
+	required int32 coins = 3;
+	required int32 vip_lv = 4;
+	required int32 old_rank = 5;
+}
+
+message PointMatchEvent {
+	required int32 match_lasted_secs = 1;
+	required int32 match_left_secs = 2;
+	required int32 my_rank = 3;
+	required int32 my_old_rank = 4;
+	required int32 my_points = 5;
+	required int32 my_coins = 6;
+	repeated PointMatchPlayer top_players = 7;
+	repeated CurrencyType champion_prize_types = 8;
+	repeated int32 champion_prize_amounts = 9 [packed=true];
+	optional string next_match_start_time = 10;
+	optional int32 round = 11;
+	optional int32 total_rounds = 12;
+}
+
+message UserCoinsChangedEvent {
+	required int32 coins = 1;
+}
+
+message UserDiamondsChangedEvent {
+	required int32 diamonds = 1;
+}
+
+message TutorialWatchedRequest {
+}
+
+message TutorialWatchedResponse {
+	enum WatchTutorialCode {
+		Ok = 0;
+		AlreadyWatched = 1;
+	}
+	required WatchTutorialCode code = 1;
+	required int32 coins = 2;
+}
+
+enum CurrencyType {
+	Coins = 0;
+	Tickets = 1;
+	Coupons = 2;
+	Diamonds = 3;
+	Flower = 4;
+	Egg = 5;
+	Horn = 6; // 喇叭
+	PrivateRoomCard = 7; // 包房卡
+	FlowerRecv = 8; // 收到的鲜花
+	EggRecv = 9; // 收到的鸡蛋
+	WinDoubleCard = 10;// 赢牌双倍金币卡 id 10
+LostHalfCard = 11;// 输牌金币减半卡 id 11
+ExpDoubleCard = 12;// 经验加倍卡 id 12
+ItemCouponsRecv = 13;             //赢得礼券数量 19
+	ItemCoinRecv   = 14;              //赢得金币的数量 20
+	ItemPointMaxRank  = 15;           //积分赛最高排名21
+	ItemPointMaxRankTime   = 16;      //积分赛最高排名日期 秒22
+	ItemWeekMaxRank   = 17;           //周赛最高排名23
+	ItemWeekMaxRankTime  = 18;        //周赛最高排名日期 秒24
+	ItemDayMaxRank    = 19;           //日赛最高排名25
+	ItemDayMaxRankTime  = 20;         //日赛最高排名日期 秒26
+	ItemMonthMaxRank  = 21;           //月赛最高排名27
+	ItemMonthMaxRankTime   = 22;      //月赛最高排名日期 秒28
+	ItemCoinLost    = 23;             //金币输的数量 29
+	ItemContinueWin    = 24;          //当前连赢 30
+	ItemBestContinueWin  = 25;        //最佳连赢 31
+	ItemOnLineNum   = 26;             //当前在线玩家人数32
+	ItemDayMatchUsedItemNo = 27;          //日赛报名物品类型 用于暂时保存玩家比赛报名的预付费
+	ItemDayMatchUsedItemNum = 28;          //日赛报名物品数量
+	ItemNightMatchUsedItemNo = 29;        //夜赛报名物品类型 用于暂时保存玩家比赛报名的预付费
+	ItemNightMatchUsedItemNum  = 30;     //夜赛报名物品数
+	ItemWeekMatchUsedItemNo =31;          //周赛报名物品类型
+	ItemWeekMatchUsedItemNum =32;         //周赛报名物品数量
+	ItemMonthMatchUsedItemNo =33;         //月赛报名物品类型
+	ItemMonthMatchUsedItemNum  =34;       //月赛报名物品数量
+	ItemCouJIangTimes        = 35 ;       //用户当前的抽奖次数
+	ItemDiamondTableLostNum  = 36 ;  //用户钻石场输牌次数积累4次送一次抽奖机会
+	ItemCoujiangLost      = 37;           //没有获奖次数积累
+	ItemMobaiTimes        =38;           //每天的膜拜次数
+	ItemMobaiTime        =39;            //最近一次膜拜的时间
+	ItemMobaiNoDiamondTimes =40; //没有抽到钻石的次数
+	ItemBaoXiangMaxExp   =41;            //宝箱的最大经验
+	ItemBaoXiangExp     =42;             //宝箱当前经验
+	ItemVip1siyong      = 43;             //vip试用项 43
+	ItemVip1siyongBeginTime  = 44;        //vip试用开始时间44 s
+	ItemVip1siyongLeftTime = 45;//试用剩余时间
+	ItemTheFirstDiaTable = 46;//是否领取过钻石场10钻石礼品 46
+	ItemWinLostWithRobot = 47;//用户从机器人那里的输赢 正赢 负输 47
+	ItemBlackListFlag   = 48;             //黑名单标志
+	ItemBlackListStep   = 49;             //作弊步数 1，2，3，4，5...1是输，后面的是间隔
+	ItemWhiteListFlag    = 50;            //白名单标志1：是 0：不是 50
+	ItemContinueLost     = 51;            //玩家连输次数51
+	ItemTelCardWith1    = 52;             //一块钱电话充值卡道具52
+	ItemTelCardWith2   =53;              //二块钱电话充值卡道具 53
+	ItemJuniorWinTimes     =54;          //初级场当前轮赢牌次数 54
+	ItemJuniorWinTelCardTimes  =55;      //初级场获得电话卡次数 55
+	ItemJuniorWinPrizeTimes    =56;      //得到奖励需要的赢牌盘数，当ItemJuniorWinTimes == ItemJuniorWinPrizeTimes 的时候，分别重新初始化 56
+	ItemMediumWinTimes      =57;         //中级场当前轮赢牌次数 57
+	ItemMediumWinTelCardTimes   =58;     //中级场获得电话卡次数 58
+	ItemMediumWinPrizeTimes    =59;      //得到奖励需要的赢牌盘数，当ItemMediumWinTimes == ItemMediumWinPrizeTimes 的时候，分别重新初始化 59
+	ItemYellowDiamond     =60;           //黄钻 60
+	ItemForever = 500; //永久使用道具分割线
+	ItemVip1    = 501; // vip1购买  id 501
+	ItemVip2    = 502; // vip2购买  id 502
+	ItemVip3    = 503; // vip3购买  id 503
+	ItemVip4    = 504; // vip4购买  id 504
+	ItemVip5    = 505; // vip5购买  id 505
+	ItemVip6    = 506; // vip6购买  id 506
+
+    ItemTZ0 = 520;//普通套装
+	ItemTZ1 = 521; // 套装1     id 521
+	ItemTZ2 = 522; // 套装2     id 522
+	ItemTZ3 = 523; // 套装3     id 523
+	ItemTZ4 = 524; // 套装4     id 524
+	ItemTZ5 = 525; // 套装5     id 525
+	ItemTZ6 = 526; // 套装6     id 526
+
+    ItemSZ0 = 540; // 普通骰子
+	ItemSZ1 = 541; // 骰子1     id 541
+	ItemSZ2 = 542; // 骰子2     id 542
+	ItemSZ3 = 543; // 骰子3     id 543
+	ItemSZ4 = 544; // 骰子4     id 544
+	ItemSZ5 = 545; // 骰子5     id 545
+	ItemSZ6 = 546; // 骰子6     id 546
+
+	ItemEND     = 547; //  end flag 547
+	UnknownItem = 999;
+}
+
+message MatchPrizeEvent {
+	required int32 rank = 1;
+	required int32 msg_id = 2;
+	required int32 match_type = 3;
+	repeated CurrencyType prize_types = 4;
+	repeated int32 prize_amounts = 5 [packed=true];
+}
+
+message PickMatchPrizeRequest {
+	required int32 msg_id = 1;
+}
+
+message PickMatchPrizeResponse {
+	enum PickPrizeCode {
+		Ok = 0;
+		AlreadyPicked = 1;
+		NoSuchPrize = 2;
+	}
+	required PickPrizeCode code = 1;
+	required int32 msg_id = 2;
+	repeated CurrencyType prize_types = 3;
+	repeated int32 prize_amounts = 4 [packed=true];
+}
+
+message ActivityEvent {
+	repeated string activity_imgs = 1;
+	repeated string activity_urls = 2;
+}
+
+enum MatchKind {
+	Points = 0;
+	DailyKnockout = 1;
+	WeeklyKnockout = 2;
+	MonthlyKnockout = 3;
+}
+
+enum KnockoutMatchStage {
+	BeforeSignup = 0;
+	SigningUp = 1;
+	BeforeEnter = 2;
+	Entering = 3;
+	InMatch = 4;
+}
+
+message GetKnockoutMatchInfoRequest {	
+}
+
+message SingleKnockoutMatchInfo {
+	required int32 match_id = 1;
+	required MatchKind kind = 2;
+	required KnockoutMatchStage stage = 3;
+	repeated CurrencyType champion_prize_types = 4;
+	repeated int32 champion_prize_amounts = 5 [packed=true];
+	required int32 minutes_before_next_stage = 6;
+	required int32 second_before_start = 7;
+	optional string last_champion_nick = 8;
+	optional bool signed_up = 9;
+	optional int32 my_last_rank_date = 10;
+	optional int32 my_last_rank = 11;
+	optional int32 my_last_prize_date = 12;
+	repeated CurrencyType my_last_prize_types = 13;
+	repeated int32 my_last_prize_amounts = 14 [packed = true];
+	repeated CurrencyType my_total_prize_types = 15;
+	repeated int32 my_total_prize_amounts = 16 [packed = true];
+	optional string name = 17;
+	repeated CurrencyType price_types = 18;
+	repeated int32 price_amounts = 19 [packed = true];
+	optional int32 min_coins_for_enter = 20;
+}
+
+message GetKnockoutMatchInfoResponse {
+	repeated SingleKnockoutMatchInfo single_matches = 1;
+}
+
+message SignupKnockoutRequest {
+	required int32 match_id = 1;
+}
+
+message SignupKnockoutResponse {
+	enum SignupKnockoutCode {
+		Ok = 0;
+		AlreadySignedUp = 1;
+		NotEnoughMoney = 2;
+		CantSignUpNow = 3;
+	}
+	required SignupKnockoutCode code = 1;
+	required int32 match_id = 2;
+	repeated CurrencyType price_types = 3;
+	repeated int32 price_amounts = 4 [packed = true];
+	repeated int32 new_money_amounts = 5 [packed = true];
+}
+
+message EnterKnockoutRequest {
+	required int32 match_id = 1;
+}
+
+message EnterKnockoutResponse {
+	enum EnterKnockoutCode {
+		Ok = 0;
+		NotSignedUp = 1;
+		AlreadyEntered = 2;
+		NotEnoughMoney = 3;
+		CantEnterNow = 4;
+	}
+	required EnterKnockoutCode code = 1;
+	required int32 match_id = 2;
+	optional int32 wait_secs = 3;
+	optional int32 min_coins = 4;
+	optional MJRule rule = 5;
+}
+
+message KnockoutStageChangeEvent {
+	required int32 match_id = 1;
+	required MatchKind kind = 2;
+	required KnockoutMatchStage stage = 3;
+	required int32 minutes_before_next_stage = 4;
+	required int32 second_before_start = 5;
+	optional bool signed_up = 6;
+	optional string winner_nick = 7;
+	repeated CurrencyType champion_prize_types = 8 [packed=true];
+	repeated int32 champion_prize_amounts = 9 [packed=true];
+	optional string name = 10;
+	repeated CurrencyType price_types = 11;
+	repeated int32 price_amounts = 12 [packed = true];
+	optional int32 min_coins_for_enter = 13;
+}
+
+message KnockoutTable {
+	enum TableStatus {
+		BeforePlay = 0;
+		Playing = 1;
+		Done = 2;
+	}
+	required int32 table_id = 1;
+	required TableStatus status = 2;
+	optional string winner_nick = 3;
+	optional Gender winner_gender = 4;
+	optional string winner_avatar = 5;
+	repeated string player_nicks = 6;
+	repeated int32 player_points = 7 [packed = true];
+}
+
+message KnockoutRound {
+	required int32 round = 1;
+	repeated KnockoutTable tables = 2;
+}
+
+message KnockoutTableChangeEvent {
+	required int32 match_id = 1;
+	required MatchKind kind = 2;
+	required int32 round = 3;
+	required int32 sub_round = 4;
+	repeated KnockoutTable tables = 5;
+}
+
+message GetKnockoutRoundTablesRequest {
+	required int32 match_id = 1;
+}
+
+message GetKnockoutRoundTablesResponse {
+	enum GetKnockoutRoundTablesCode {
+		Ok = 0;
+		NoSuchMatch = 1;
+	}
+	required GetKnockoutRoundTablesCode code = 1;
+	required int32 match_id = 2;
+	optional MatchKind kind = 3;
+	optional int32 current_round = 4;
+	optional int32 current_sub_round = 5;
+	repeated CurrencyType champion_prize_types = 6;
+	repeated int32 champion_prize_amounts = 7 [packed=true];
+	repeated KnockoutRound rounds = 8;
+}
+
+message KnockoutPromotionEvent {
+	required int32 match_id = 1;
+	required MatchKind kind = 2;
+	required int32 round = 3;
+	required bool won = 4;
+	required MJRoundEndedEvent details = 5;
+}
+
+message KnockoutSubstituteEvent {
+	required int32 match_id = 1;
+	required MatchKind kind = 2;
+	required int32 timeout_secs = 3;
+}
+
+message KnockoutSubstituteRequest {
+	enum SubstituteAction {
+		Deny = 0;
+		Accept = 1;
+	}
+	required SubstituteAction action = 1;
+	required int32 match_id = 2;
+}
+
+message KnockoutSubstituteResponse {
+	enum SubstituteCode {
+		Ok = 0;
+		NoPlace = 1;
+		AlreadySubstituted = 2;
+		Fail = 3;
+	}
+	required SubstituteCode code = 1;
+	required int32 match_id = 2;
+}
+
+message KnockoutFinalAuctionEvent {
+	required int32 match_id = 1;
+	required MatchKind kind = 2;
+	required int32 timeout_secs = 3;
+	required int32 top_diamonds = 4;
+	required string top_nick = 5;
+}
+
+message KnockoutFinalAuctionRequest {
+	required int32 match_id = 1;
+	required int32 diamonds = 2;
+}
+
+message KnockoutFinalAuctionResponse {
+	enum KnockoutFinalAuctionCode {
+		Ok = 0;
+		InvalidDiamonds = 1;
+		NotEnoughMoney = 2;
+		AuctionEnded = 3;
+	}
+	required KnockoutFinalAuctionCode code = 1;
+	required int32 match_id = 2;
+	optional int32 auction_diamonds = 3;
+	optional int32 diamonds_left = 4;
+}
+
+message KnockoutFinalAuctionResultEvent {
+	required int32 match_id = 1;
+	required MatchKind kind = 2;
+	required bool won_auction = 3;
+	required int32 diamonds_auctioned = 4;
+	required int32 my_diamonds = 5;
+	required int32 top_diamonds = 6;
+	required string top_nick = 7;
+}
+
+message FreeChatEvent {
+	required string nick = 1;
+	required string msg = 2;
+}
+
+message LogoutRequest {
+	required string session_id = 1;
+}
+
+message LogoutResponse {
+	enum LogoutResponseCode {
+		Ok = 0;
+		Forbidden = 1;
+		Fail = 2;
+	}
+	required LogoutResponseCode code = 1;
+}
+
+//  签到信息请求
+message GetSignInfoRequest {
+}
+// 签到奖励
+message SignPrize{
+	required int32 sign_count = 1;  // 需要连续登陆的天数
+	repeated CurrencyType prize_types = 2 [packed=true]; // 奖励类型
+	repeated int32 prize_amounts = 3 [packed=true]; // 奖励数量
+}
+
+// 签到信息响应
+message GetSignInfoResponse{
+	required int32 sign_count = 1;     // 连续签到天数
+	required bool signed = 2;          // 今天是否签到
+	repeated SignPrize prizes  = 3;     // 登陆奖励列表
+}
+
+// 签到请求
+message SignRequest{
+	required int32 sign_count = 1;     // 签到天数
+}
+
+// 签到响应
+message SignResponse{
+	enum SignResponseCode {
+		Ok = 0; // 签到成功
+		OkInvalidSignCount = 1; // 签到成功但是签到天数不对
+		AlreadySigned = 2; // 已签到
+		
+	}
+	required SignResponseCode code = 1; // 签到结果
+	optional int32 sign_count = 2; // 签到天数
+	repeated CurrencyType prize_types = 3 [packed=true]; // 奖励类型
+	repeated int32 prize_delta_amounts = 4 [packed=true]; // 对应类型的变化值
+	repeated int32 prize_final_amounts = 5 [packed=true]; // 对应类型的最终值
+}
+
+// 任务类型
+enum TaskType{
+	UnknownTask = 0; // 未知任务便于日后增加
+	DailyRandomTask = 1; // 每日随机任务 
+	TitleTask = 2; // 头衔任务
+	NoviceTask = 3; // 新手任务
+}
+
+
+// 任务
+message Task{
+	required TaskType task_type = 1 [default = UnknownTask];
+	required int32 task_id = 2;
+	optional string name = 3; // 名称
+	optional string desc = 4; // 描述
+	optional int32 steps = 5; // 总进度
+	optional int32 progress = 6; // 进度
+	repeated CurrencyType prize_types = 7 [packed=true]; // 奖励类型
+	repeated int32 prize_amounts = 8 [packed=true]; // 奖励数量
+	optional bool prize_given = 9; //奖励是否获取
+	optional bool finished = 10; // 奖励是否已获取
+	optional int32 prize_title_id = 11; // 获取的头衔奖励
+}
+
+message GetTasksRequest {
+	repeated TaskType task_types = 1;
+}
+
+message GetTasksResponse {
+	repeated Task tasks = 1; 
+}
+
+message TaskEvent {
+	repeated Task tasks = 1;
+}
+
+message Title {
+	required int32  title_id = 1;
+	required string name = 2;
+	required bool   selected = 3;
+	required string desc = 4;
+	required int32  progress = 5;
+	required int32  steps = 6;
+	required int32  level = 7;
+	required int32  max_level = 8;	
+}
+
+message GetTitlesRequest {
+	enum Filter{
+		All = 1;
+		Available = 2;
+		Changed = 3;
+	}
+	required Filter filter = 1;
+}
+
+message TitleEvent{
+	required GetTitlesRequest.Filter filter = 1;
+	repeated Title titles = 2;
+}
+
+message ChangeTitleRequest{
+	required int32 title_id = 1;	
+}
+
+message ChangeTitleResponse{
+	enum Code {
+		Ok = 0;
+		NotAvailable = 1; // 未获取头衔
+		NotExist = 2; // 头衔不存在
+		Unknown = 3; // 未知错误
+	}
+	required Code code = 1;
+	required int32 title_id = 2;
+}
+
+message PickTaskPrizeRequest {
+	required int32 task_id = 1;
+}
+
+message PickTaskPrizeResponse {
+	enum Code {
+		Ok = 0;
+		AlreadyPicked = 1;
+		NoSuchPrize = 2;
+	}
+	required Code code = 1;
+	required int32 task_id = 2;
+	repeated CurrencyType prize_types = 3;
+	repeated int32 prize_amounts = 4 [packed=true];
+	optional Task task  = 5;
+	optional int32 prize_title_id = 6;
+}
+
+message ItemChangedEvent {
+	repeated CurrencyType item_types = 1;
+	repeated int32 item_amounts = 2[packed=true]; 
+}
+
+message FameChangedEvent {
+	required int32  fame = 1; // 当前声望
+	required int32  fame_delta = 2; // 声望变化
+	optional int32  level = 3;
+	optional string name = 4;
+}
+
+message GetFameDetailRequest{
+	
+}
+
+message FameLevel{
+	required int32  level = 1;
+	required int32  fame = 2; // 升级所需声望点数
+	required string name = 3; // 升级所获取声望名
+}
+
+message GetFameDetailResponse{
+	required int32  fame =1; // 声望点数
+	required int32  fame_level = 2; // 声望等级
+	repeated FameLevel all_levels = 3;
+}
+
+
+message VipChangedEvent{
+	required int32 vip_level = 1;
+	repeated int32 item_no = 2 [packed=true];//物品增量
+	repeated int32 item_num = 3 [packed=true];
+}
+
+message PickBasicLivingRequest{
+	
+}
+
+message PickBasicLivingResponse{
+	enum  Code{
+		Ok = 0;
+		Failed = 1;
+		CountExhaust = 2; // 次数用尽
+		TooManyCoins = 3;   // 不符合低保资质，如金币大于低保要求		
+	}
+	
+	required Code  code  = 1;
+	optional int32 coins = 2; // 只有成功才会返回金币,此为用户领取后的金币值
+}
+
+
+message AlterNicknameRequest{
+	required string nickname = 1;
+}
+
+message AlterNicknameResponse{
+	enum Code{
+		Ok  = 0; // 修改成功
+		Failed = 1; // 修改失败，其他位置原因
+		InvalidChar = 2; // 无效字符，中文下划线数字字母
+		InvalidLength = 3; // 无效长度，中文算作2个字符，其他字符算作一个，长度为3-12
+		Duplicate = 4; // 重复
+		BadWord = 5;  // 敏感词
+		CountExhaust = 6; // 次数用尽
+	}
+	required Code   code = 1;
+	required string nickname = 2;
+}
+
+message HornRequest{
+	required string content = 1; // 喇叭内容
+}
+
+message HornResponse{
+	enum Code{
+		Ok = 0;
+		Failed = 1;
+		HornNotEnough  = 2;
+	}
+	
+	required Code   code = 1;
+	optional int32  horns = 2; // 剩余喇叭数量
+}
+
+message HornEvent{
+	required string from = 1;    // 喇叭发送者昵称
+	required string content = 2; // 喇叭内容
+}
+
+message MJKickByVipRequest{
+	required string kickee_nickname = 1; // 被踢者昵称
+	optional string userid = 2;
+}
+
+message MJKickByVipResponse{
+	enum Code {
+		Ok =1;
+		Failed = 2;
+		NeedVip = 3; // 需要VIP权利，目前是1级VIP
+		NeedHigherVipLevel = 4; // 被踢者VIP等级与踢人者相同甚至更高，无法提出
+		NotInTable = 5; // 已不在游戏桌中
+	}
+	
+	required Code   code = 1; 
+	required string kickee_nickname = 2; // 被踢者昵称
+	optional string kickee_userid = 3;
+}
+
+message MJKickByVipEvent{
+	required string kicker_nickname  = 1; // 踢人者昵称
+	required int32  kicker_vip_level = 2; // 踢人者VIP级别
+	optional string userid = 3; // 踢人者userid
+}
+
+message MJOtherKickByVipEvent{	
+	required string kickee_nickname  = 1; // 被踢者昵称
+	required string kicker_nickname  = 2; // 踢人者昵称
+	required int32  kicker_vip_level = 3; // 踢人者VIP级别
+	optional string kickee_userid = 4; // 被踢者userid
+	optional string kicker_userid = 5; // 踢人者userid
+}
+
+message MJUseItemRequest{
+	required int32 item_type  = 1; // 道具类型
+	required int32 item_count = 2; // 道具数量
+	required string target = 3;    // 目标用户昵称
+	optional string userid = 4; // 目标userid
+}
+
+message MJUseItemResponse{
+	enum Code{
+		Ok = 0;
+		Failed = 1;
+		NotEnough= 2;  // 道具不足
+		TargeNotExits = 3; // 目标用户不存在
+	}
+	
+	required Code code  = 1;	
+	optional int32  item_type  = 2; // code=Ok,有值
+	optional int32  item_count = 3; // code=Ok,有值
+}
+
+message MJUseItemEvent{
+	required string from  = 1; 
+	required string target = 2;     // 目标用户昵称
+	required int32  target_item_type  = 3; // 目标用户对应改变道具类型
+	required int32  target_item_count = 4; // 目标用户对应当前道具数量
+	required int32  target_item_delta = 5; // 目标用户对应改变道具数量
+	required string from_userid  = 6; 	   // 使用者userid
+	required string target_userid = 7;     // 目标用户userid
+}
+
+message ChkInviteCodeRequest{
+	required string invite_code = 1;
+}
+
+message ChkInviteCodeResponse{
+	enum Code{
+		Ok = 0;
+		Failed = 1;
+		CodeNotExists = 2;
+		OkMobileUnbound = 3;
+	}	
+	required Code code = 1;	
+}
+
+message PickInvitePrizeRequest{
+	
+}
+
+message PickInvitePrizeResponse{
+	enum Code {
+		Ok = 0;		
+		AlreadyPicked = 1;
+		NoSuchPrize = 2;
+	}
+	required Code code = 1;
+	repeated CurrencyType prize_types = 2;
+	repeated int32 prize_amounts = 3 [packed=true];
+}
+
+message GetInvitePrizeRequest{
+	
+}
+
+message GetInvitePrizeResponse{
+	enum Code {
+		Ok = 0;
+		NoSuchPrize = 1;
+		MobilePrized = 2;
+	}
+	enum PrizeType{
+		Item = 1; // 道具礼包
+		Hongbao = 2; // 红包
+	}
+	
+	required Code code = 1;	
+	optional PrizeType  prize_type   = 2; // code=Ok,有值
+	optional string 	prize_jsoned = 3; // 如果PrizeType=Item内容为{itemtypes: []int, itemamounts: []int}；如果PrizeType=Hongbao内容为{cardno:string, cardpass:string}
+}
+
+message InviteStatus{
+	enum Status {
+		CanCheckInviteCode = 0;
+		MobileUnbound = 1;
+		CanGetInvitePrize  = 2;
+		CanPickInvitePrize = 3;
+		MobilePrized = 4;		
+		AllDone = 5;
+	}
+	required Status code = 1;
+	repeated CurrencyType prize_types = 2;
+	repeated int32 prize_amounts = 3 [packed=true];
+}
+
+message GetVipPriceTableRequese{//用户id 申请VIP价格和奖品的静态表
+}
+
+message GetVipPriceTableResponse{
+	required int32 vip_level = 1;//用户当前的vip等级
+	required int32 vip_1_price = 2;//vip1 价格 钻石数量
+	required string vip_1_prize_json = 3;//vip1礼包，内容为{itemtypes: []int, itemamounts: []int}
+	required int32 vip_2_price = 4;//vip2 价格 钻石数量
+	required string vip_2_prize_json = 5;//vip2礼包，内容为{itemtypes: []int, itemamounts: []int}
+	required int32 vip_3_price = 6;//vip3 价格 钻石数量
+	required string vip_3_prize_json = 7;//vip3礼包，内容为{itemtypes: []int, itemamounts: []int}
+	required int32 vip_4_price = 8;//vip4 价格 钻石数量
+	required string vip_4_prize_json = 9;//vip4礼包，内容为{itemtypes: []int, itemamounts: []int}
+	required int32 vip_5_price = 10;//vip5 价格 钻石数量
+	required string vip_5_prize_json = 11;//vip5礼包，内容为{itemtypes: []int, itemamounts: []int}
+	required int32 vip_6_price = 12;//vip6 价格 钻石数量
+	required string vip_6_prize_json = 13;//vip6礼包，内容为{itemtypes: []int, itemamounts: []int}
+	required int32 vip_1_basic_live = 14;//低保次数
+	required int32 vip_2_basic_live = 15;//低保次数
+	required int32 vip_3_basic_live = 16;//低保次数
+	required int32 vip_4_basic_live = 17;//低保次数
+	required int32 vip_5_basic_live = 18;//低保次数
+	required int32 vip_6_basic_live = 19;//低保次数
+	required int32 vip_1_discount = 20;//vip1折扣 1～100
+	required int32 vip_2_discount = 21;//vip2折扣 1～100
+	required int32 vip_3_discount = 22;//vip3折扣 1～100
+	required int32 vip_4_discount = 23;//vip4折扣 1～100
+	required int32 vip_5_discount = 24;//vip5折扣 1～100
+	required int32 vip_6_discount = 25;//vip6折扣 1～100
+}
+
+message BuyVipRequese{
+	required int32 new_vip_level = 2;//新的vip等级
+}
+
+message BuyVipResponse{
+	enum Code{
+		Ok = 0;//购买成功
+		Failed = 1;//其他失败
+		NotEnough= 2;  // 钻石不足
+	}
+	
+	required Code code  = 1;
+	required string vip_prize_json = 2;//vip6礼包，内容为{itemtypes: []int, itemamounts: []int}	
+}
+
+message MsgRemind{
+	required int32 type = 1;//信息类型
+	required int32 amount = 2;//信息数量
+}
+
+message GameLifeRequese{
+}
+
+message GameLifeResponse{
+enum Code{
+		Ok = 0;//成功
+		Failed = 1;//其他失败
+	}
+	
+	required Code code  = 1;
+	required string uid = 2;
+	required int32 all_user = 3;//玩家总人数
+	required int32 online_user = 4;//玩家在线人数
+	required int32 win_round = 5;//胜场数
+	required int32 lost_round = 6;//败场数
+	required int32 run_round = 7;//逃跑场数
+	required int32 all_round = 8;//总场数
+	required int32 continue_win_round = 9;//当前连赢次数
+	required int32 continue_win_round_best = 10;//最高连赢次数
+	required int32 win_coins = 11;//赢金币数
+	required int32 win_coins_rank = 12;//赢金币排行
+	required int32 lost_coins = 13;//输金币数
+	required int32 win_coupons = 14;//得到的礼券
+	required int32 win_coupons_rank = 15;//得到的礼券的排行
+	required int32 pointMatch_best = 16;//积分赛最高排名
+	required string pointMatch_date = 17;//日期
+	required int32 dayMatch_best = 18;//日赛最高排名
+	required string dayMatch_date = 19;//日期
+	required int32 weekMatch_best = 20;//周赛最高排名
+	required string weekMatch_date = 21;//日期
+	required int32 monthMatch_best = 22;//月赛最高排名
+	required string monthMatch_date = 23;//日期
+	repeated string ipad_url = 24;//实物奖励url
+	repeated int32 ipad_num = 25;//实物奖励数量
+}
+
+message GameRankListRequese{
+}
+
+message GameRankListResponse{
+enum Code{
+		Ok = 0;//成功
+		Failed = 1;//其他失败
+	}
+	
+	required Code code  = 1;
+	required string uid =2;
+	repeated string day_win_coin = 3;//日赢金币排行
+	repeated string day_win_coupon = 4;//日赢奖券排行
+	repeated string all_coin = 5;//所有财富排行
+	repeated string all_meili = 6;//所有魅力排行
+	repeated string all_win_coin = 7;//所有赢金币排名
+}
+
+message DiamondCouJiangInfoRequest{//获得当前的抽奖信息
+}
+
+message DiamondCouJiangInfoResponse{
+	repeated int32 KJNum = 1 [packed=true];//本期开奖号码 1，2，3
+	repeated int32 LastKJNum = 2 [packed=true];//上期开奖号码 1，2，3
+	required int32 diamond_amount = 3;//彩池数量
+	required int32 begin_time = 4;//开始时间
+	required int32 end_time = 5;//结束时间
+	required int32 left_time = 6;//剩余时间 s
+}
+
+message DiamondUserCouJiangInfoRequest{
+	required int32 flag = 1;//0:表示获得历史数据 1：表示获得当前抽奖数据 2:表示获得最近的一次中大奖的记录 3:表示获取当前正在进行的抽奖数据 4:领取钻石场的礼品
+}
+
+message DiamondUserCouJiangInfoResponse{
+    enum Code{
+		Ok = 0;//成功
+		NoTimes = 1;//次数不够
+		CJStop = 2;//抽奖暂停
+		REQERR = 3;//请求错误
+		CannotReReq = 4;//当前抽奖未完成不能重复抽奖
+		OtherErr = 5;//其他错误
+	}
+	
+	required Code code  = 1;
+    required int32 flag = 2;//0:表示获得历史数据 1：表示获得当前抽奖数据 2:表示获得最近的一次中大奖的记录 3:表示获取当前正在进行的抽奖数据 4:领取钻石场的礼品
+    required int32 left_times = 3;//返回玩家剩下的抽奖次数
+	repeated string CJ = 4;//返回抽奖数据串 json格式
+}
+
+message DiamondUserZJRequest{//用户请求开奖信息
+	required string uid = 1;
+}
+message DiamondUserZJResponse{
+enum Code{
+		Big = 0;//大奖
+		Small = 1;//小奖
+		None = 2;//没中奖
+	}
+	required Code code  = 1;
+	required int32 diamonds = 2;//返回这个时候用户钻石变化数
+	required int32 coupons = 3;//返回这个时候的用户奖券变化数
+}
+
+message MoBaiRequest{
+	required int32 flag = 1;//0:查询膜拜次数  1：膜拜 
+}
+
+message MoBaiResponse{
+enum Code{
+		Ok = 0;//成功
+		NoTimes = 1;//次数不够
+		NoCoin = 2;//金币不够
+		REQERR = 3;//请求错误
+		OtherErr = 5;//其他错误
+	}
+	required Code code  = 1;
+	required int32 leftTimes = 2;//剩余次数
+	required int32 type = 3;     //道具type 查询的时候 返回-1 未掉落道具返回 0
+	required int32 num = 4;      //道具数量
+}
+
+message BaoXiangRequest{//请求开宝箱
+}
+
+message BaoXiangResponse{
+enum Code{
+		Ok = 0;//成功
+		NoExp = 1;//经验不够
+		NoCoin = 2;//金币不够
+		REQERR = 3;//请求错误
+		OtherErr = 4;//其他错误
+	}
+	required Code code  = 1;     //当返回NoCoin的时候，下面字段返回缺少的数量
+	repeated int32 type = 2;     //道具type 查询的时候 返回-1 未掉落道具返回 0
+	repeated int32 num = 3;      //道具数量 
+}
+
+message BaoXiangInfoRequest{//包厢场价格信息请求
+}
+
+message BaoXiangInfoResponse{
+    required int32 type1 = 1;//大奖奖品类型
+	required int32 num1 = 2;//大奖奖品数量
+	required int32 type2 = 3;//一等奖奖品类型
+	required int32 num2 = 4;//一等奖奖品数量
+	required int32 type3 = 5;//二等奖奖品类型
+	required int32 num3 = 6;//二等奖奖品数量
+	required int32 type4 = 7;//三等奖奖品类型
+	required int32 num4 = 8;//三等奖奖品数量
+	required int32 costtype = 9;//抽奖消耗类型
+	required int32 costnum = 10;//抽奖消耗数量
+	required int32 diamondTable_MinDiamond = 11;//钻石场入场门槛
+	required int32 diamondTable_WinDouble = 12;//钻石场起胡番数	
+	required int32 JuniorTable_MinCoin = 13;//初级场入场门槛
+	required int32 MediumTable_MinCoin = 14;//中级场入场门槛
+	required int32 JuniorTableBaseMin = 15;//初级场最小底
+	required int32 JuniorTableBaseMax = 16;//初级场最大底
+	required int32 MediumTableBaseMin = 17;//中级场最小底
+	required int32 MediumTableBaseMax = 18;//中级场最大底
+}
+
+message TableBaseEvent{
+	required int32 tableBase = 1;//当前的动态底
+}

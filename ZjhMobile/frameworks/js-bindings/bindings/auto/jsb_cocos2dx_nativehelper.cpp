@@ -103,6 +103,46 @@ bool js_cocos2dx_nativehelper_NativeHelper_setCallFunc(JSContext *cx, uint32_t a
     JS_ReportError(cx, "js_cocos2dx_nativehelper_NativeHelper_setCallFunc : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
+bool js_cocos2dx_nativehelper_NativeHelper_testSend1(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::NativeHelper* cobj = (cocos2d::NativeHelper *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_nativehelper_NativeHelper_testSend1 : Invalid Native Object");
+    if (argc == 1) {
+        const char* arg0;
+        std::string arg0_tmp; ok &= jsval_to_std_string(cx, args.get(0), &arg0_tmp); arg0 = arg0_tmp.c_str();
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_nativehelper_NativeHelper_testSend1 : Error processing arguments");
+        cobj->testSend1(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_nativehelper_NativeHelper_testSend1 : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_nativehelper_NativeHelper_testSend(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::NativeHelper* cobj = (cocos2d::NativeHelper *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_nativehelper_NativeHelper_testSend : Invalid Native Object");
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_nativehelper_NativeHelper_testSend : Error processing arguments");
+        cobj->testSend(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_nativehelper_NativeHelper_testSend : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_cocos2dx_nativehelper_NativeHelper_singleton(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -151,6 +191,8 @@ void js_register_cocos2dx_nativehelper_NativeHelper(JSContext *cx, JS::HandleObj
     static JSFunctionSpec funcs[] = {
         JS_FN("test", js_cocos2dx_nativehelper_NativeHelper_test, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setCallFunc", js_cocos2dx_nativehelper_NativeHelper_setCallFunc, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("testSend1", js_cocos2dx_nativehelper_NativeHelper_testSend1, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("testSend", js_cocos2dx_nativehelper_NativeHelper_testSend, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
 

@@ -7,6 +7,7 @@
 //
 
 #include "NativeHelper.h"
+#include "GameSocket.h"
 
 USING_NS_CC;
 
@@ -41,10 +42,36 @@ std::string NativeHelper::test()
         mCallFunc("setCallFunc hehe");
     }
     
+    GameSocket::GetSingleton()->test();
+    
     return "test msg";
+}
+
+void NativeHelper::testSend(string buffer)
+{
+    GameSocket::GetSingleton()->testSend(buffer);
+}
+
+void NativeHelper::testSend1(const char *data)
+{
+    GameSocket::GetSingleton()->testSend1(data);
 }
 
 void NativeHelper::setCallFunc(function<void (string)> callFunc)
 {
     mCallFunc = callFunc;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

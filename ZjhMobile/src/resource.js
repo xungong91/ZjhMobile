@@ -3,7 +3,8 @@ var res = {
     CloseNormal_png : "res/CloseNormal.png",
     CloseSelected_png : "res/CloseSelected.png",
     Person_proto : "res/Person.txt",
-    packets_zjh_proto : "res/packets_zjh.txt"
+    packets_zjh_proto : "res/packets_zjh.txt",
+    packets_txt : "res/packets.txt"
 };
 
 var g_resources = [];
