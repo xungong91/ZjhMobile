@@ -16,6 +16,7 @@ bool js_cocos2dx_nativehelper_NativeHelper_test(JSContext *cx, uint32_t argc, js
 bool js_cocos2dx_nativehelper_NativeHelper_setCallFunc(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_nativehelper_NativeHelper_testSend1(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_nativehelper_NativeHelper_testSend(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_nativehelper_NativeHelper_codeData(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_nativehelper_NativeHelper_singleton(JSContext *cx, uint32_t argc, jsval *vp);
 #endif
 

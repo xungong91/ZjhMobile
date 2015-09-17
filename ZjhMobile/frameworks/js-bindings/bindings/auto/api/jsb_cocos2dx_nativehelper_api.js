@@ -49,6 +49,18 @@ str
 },
 
 /**
+ * @method codeData
+ * @param {String} arg0
+ * @return {String}
+ */
+codeData : function (
+str 
+)
+{
+    return ;
+},
+
+/**
  * @method singleton
  * @return {cc.NativeHelper}
  */

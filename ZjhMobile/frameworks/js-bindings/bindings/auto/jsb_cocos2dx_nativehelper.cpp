@@ -143,6 +143,28 @@ bool js_cocos2dx_nativehelper_NativeHelper_testSend(JSContext *cx, uint32_t argc
     JS_ReportError(cx, "js_cocos2dx_nativehelper_NativeHelper_testSend : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
+bool js_cocos2dx_nativehelper_NativeHelper_codeData(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::NativeHelper* cobj = (cocos2d::NativeHelper *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_nativehelper_NativeHelper_codeData : Invalid Native Object");
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_nativehelper_NativeHelper_codeData : Error processing arguments");
+        std::string ret = cobj->codeData(arg0);
+        jsval jsret = JSVAL_NULL;
+        jsret = std_string_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_nativehelper_NativeHelper_codeData : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_cocos2dx_nativehelper_NativeHelper_singleton(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -193,6 +215,7 @@ void js_register_cocos2dx_nativehelper_NativeHelper(JSContext *cx, JS::HandleObj
         JS_FN("setCallFunc", js_cocos2dx_nativehelper_NativeHelper_setCallFunc, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("testSend1", js_cocos2dx_nativehelper_NativeHelper_testSend1, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("testSend", js_cocos2dx_nativehelper_NativeHelper_testSend, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("codeData", js_cocos2dx_nativehelper_NativeHelper_codeData, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
 
