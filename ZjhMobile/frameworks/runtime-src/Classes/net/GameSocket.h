@@ -18,7 +18,6 @@ public:
     GameSocket();
     virtual ~GameSocket();
     
-    void test();
     void testSend(string buffer);
     void testSend1(const char *data);
     string codeData( string data );

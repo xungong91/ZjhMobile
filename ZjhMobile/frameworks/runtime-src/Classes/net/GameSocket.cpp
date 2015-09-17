@@ -26,11 +26,6 @@ GameSocket::~GameSocket()
     mODSocket.Close();
 }
 
-void GameSocket::test()
-{
-    Connect("192.168.2.21");
-}
-
 void GameSocket::testSend(string buffer)
 {
     string mMagic = "WGP1";

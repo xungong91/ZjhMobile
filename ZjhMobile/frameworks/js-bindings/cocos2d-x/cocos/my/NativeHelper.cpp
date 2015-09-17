@@ -42,7 +42,7 @@ std::string NativeHelper::test()
         mCallFunc("setCallFunc hehe");
     }
     
-    GameSocket::GetSingleton()->test();
+    GameSocket::GetSingleton()->Connect("192.168.2.21", 7999);
     
     return "test msg";
 }
