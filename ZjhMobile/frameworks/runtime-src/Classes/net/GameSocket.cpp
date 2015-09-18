@@ -3,6 +3,7 @@
 //  Created by LiuXueCheng on 15/9/16
 
 #include "GameSocket.h"
+#include "PacketAssembler.h"
 
 static GameSocket *sGameSocket = nullptr;
 
@@ -31,55 +32,31 @@ void GameSocket::test()
     Connect("192.168.2.21", 7999);
 }
 
-void GameSocket::testSend(string buffer)
+bool GameSocket::sendJsMsg(string msg, int msgId)
 {
-    string mMagic = "WGP1";
+    //长度
     int lenght;
-    int msgId = 7;
-    
-    CCLOG(buffer.c_str());
-//    string loads = codeData(buffer);
-    string loads = buffer;
+    //抑或加密
+    string loads = PacketAssembler::singleton()->codeData(msg);
+    //发送的指针
     char* result;
-    //º”√‹
-    //◊º±∏∫œ≥…
-    int Magiclenght = mMagic.length();
-    //short messagemappings=getTypeForMessage(message);      3.17
+    
+    int Magiclenght = (int)PacketAssembler::gMagic.length();
     short loadslenght=loads.length();
     lenght = Magiclenght + 2 + 2 + loadslenght;
     
     result = new char[lenght];
-    memcpy(result,mMagic.c_str() , Magiclenght);
+    memcpy(result, PacketAssembler::gMagic.c_str() , Magiclenght);
     char twochar[2];
     twochar[0] = (char)(msgId>>8);
     twochar[1] = (char)(msgId>>0);
     memcpy(result+Magiclenght , twochar,2);
-    //twochar[0] = (char)(messagemappings>>8);				 3.17
-    //twochar[1] = (char)(messagemappings>>0);				 3.17
-    //memcpy(result+Magiclenght , twochar,2);				 3.17
     twochar[0] = (char)(loadslenght>>8);
     twochar[1] = (char)(loadslenght>>0);
     memcpy(result + Magiclenght + 2, twochar , 2);
     memcpy(result + Magiclenght + 2 + 2, loads.c_str() , loadslenght);
     
-    SendMsg(result, lenght);
-}
-
-string GameSocket::codeData( string data )
-{
-    int key[] = {71, 113, 127, 103, 67, 97, 73, 79, 107, 131, 61, 109, 59, 101, 89, 83};
-    int keylenght = sizeof(key)/sizeof(int);
-    size_t datalenght = data.length();
-    for (size_t i = 0; i< datalenght; i++)
-    {
-        data[i]^= key[(i) % keylenght];
-    }
-    return data;
-}
-
-void GameSocket::testSend1(const char *data)
-{
-    CCLOG(data);
+    return SendMsg(result, lenght);
 }
 
 //关闭连接
@@ -151,7 +128,30 @@ void GameSocket::ReceiveData()
         {
             //接收消息
             CCLOG("收到消息");
-            CCLOG(receiveBuf);
+            //解析消息 存储recvBuf  成功返回 pkyType 和 msg
+            bool valid = PacketAssembler::singleton()->assemble(receiveBuf, len);
+            if (valid)
+            {
+                int iTest = 0;
+                while (valid)
+                {
+                    //继续解析
+                    valid = PacketAssembler::singleton()->assemble(NULL, 0);
+                    if (!valid)
+                    {
+                        //数据不准确需要继续recv
+                        break;
+                    }
+                    ++iTest;
+                    
+                    //防止当前循环使cup过高
+                    this_thread::sleep_for(chrono::milliseconds(1));
+                }
+            }
+            else
+            {
+                // 数据包不够解析 需要继续recv
+            }
         }
         else if(len == 0)
         {

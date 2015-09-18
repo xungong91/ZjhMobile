@@ -8,6 +8,7 @@
 
 #include "NativeHelper.h"
 #include "GameSocket.h"
+#include "PacketAssembler.h"
 
 USING_NS_CC;
 
@@ -16,7 +17,7 @@ NativeHelper::CGarbo NativeHelper::mGarbo;
 NativeHelper *NativeHelper::mNativeHelper = nullptr;
 
 NativeHelper::NativeHelper()
-: mCallFunc(nullptr)
+: mMsgCallBack(nullptr)
 {
     
 }
@@ -37,36 +38,53 @@ NativeHelper *NativeHelper::singleton()
 
 std::string NativeHelper::test()
 {
-    if (mCallFunc)
-    {
-        mCallFunc("setCallFunc hehe");
-    }
-    
-    GameSocket::GetSingleton()->Connect("192.168.2.21", 7999);
+    GameSocket::GetSingleton()->test();
+//    vector<int> a = {1, 2, 3, 4, 5, 6};
+//    setMsg(a);
     
     return "test msg";
 }
 
-void NativeHelper::testSend(string buffer)
+void NativeHelper::setPacketAssembler(function<void (string, int)> msgCallBack)
 {
-    GameSocket::GetSingleton()->testSend(buffer);
+    mMsgCallBack = msgCallBack;
 }
 
-void NativeHelper::testSend1(const char *data)
+void NativeHelper::setCallBack(function<void ()> callBack)
 {
-    GameSocket::GetSingleton()->testSend1(data);
+    mCallBack = callBack;
 }
 
-void NativeHelper::setCallFunc(function<void (string)> callFunc)
+MessageStruct NativeHelper::getMsg()
 {
-    mCallFunc = callFunc;
+    MessageStruct temp = mMsgs.front();
+    mMsgs.pop_front();
+    return temp;
 }
 
-string NativeHelper::codeData(string code)
+void NativeHelper::setMsg(MessageStruct msg)
 {
-    return GameSocket::GetSingleton()->codeData(code);
+    mMsgs.push_back(msg);
 }
 
+void NativeHelper::startSendMsg()
+{
+    Director::getInstance()->getRunningScene()->schedule
+    ([this](float dt)
+    {
+        if (mMsgCallBack && mMsgs.size() > 0)
+        {
+//            mMsgCallBack();
+            MessageStruct msg = getMsg();
+            mMsgCallBack(msg.base64, msg.msgId);
+        }
+    }, 0.1f, "startSendMsg");
+}
+
+bool NativeHelper::sendJsMsg(string msg, int msgId)
+{
+    return GameSocket::GetSingleton()->sendJsMsg(msg, msgId);
+}
 
 
 

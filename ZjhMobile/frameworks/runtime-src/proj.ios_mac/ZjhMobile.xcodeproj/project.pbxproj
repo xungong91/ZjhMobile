@@ -102,6 +102,8 @@
 		EA89A0B41BA709D80083BA20 /* ODSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EA89A0B21BA709D80083BA20 /* ODSocket.cpp */; };
 		EA89A0D41BA714980083BA20 /* jsb_cocos2dx_nativehelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EA89A0D21BA714980083BA20 /* jsb_cocos2dx_nativehelper.cpp */; };
 		EA89A0D81BA714A50083BA20 /* NativeHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EA89A0D61BA714A50083BA20 /* NativeHelper.cpp */; };
+		EA9920EA1BAB10F3000F3C2B /* CRingBuf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EA9920E81BAB10F3000F3C2B /* CRingBuf.cpp */; };
+		EA9920ED1BAB118C000F3C2B /* PacketAssembler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EA9920EB1BAB118C000F3C2B /* PacketAssembler.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -262,6 +264,10 @@
 		EA89A0D31BA714980083BA20 /* jsb_cocos2dx_nativehelper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = jsb_cocos2dx_nativehelper.hpp; path = "../../js-bindings/bindings/auto/jsb_cocos2dx_nativehelper.hpp"; sourceTree = "<group>"; };
 		EA89A0D61BA714A50083BA20 /* NativeHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NativeHelper.cpp; sourceTree = "<group>"; };
 		EA89A0D71BA714A50083BA20 /* NativeHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NativeHelper.h; sourceTree = "<group>"; };
+		EA9920E81BAB10F3000F3C2B /* CRingBuf.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CRingBuf.cpp; sourceTree = "<group>"; };
+		EA9920E91BAB10F3000F3C2B /* CRingBuf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRingBuf.h; sourceTree = "<group>"; };
+		EA9920EB1BAB118C000F3C2B /* PacketAssembler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PacketAssembler.cpp; sourceTree = "<group>"; };
+		EA9920EC1BAB118C000F3C2B /* PacketAssembler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PacketAssembler.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -576,10 +582,14 @@
 		EA89A0B11BA709D80083BA20 /* net */ = {
 			isa = PBXGroup;
 			children = (
+				EA9920E81BAB10F3000F3C2B /* CRingBuf.cpp */,
+				EA9920E91BAB10F3000F3C2B /* CRingBuf.h */,
 				EA89A0B21BA709D80083BA20 /* ODSocket.cpp */,
 				EA89A0B31BA709D80083BA20 /* ODSocket.h */,
 				9D007CB51BA93F7B00B26592 /* GameSocket.cpp */,
 				9D007CB61BA93F7B00B26592 /* GameSocket.h */,
+				EA9920EB1BAB118C000F3C2B /* PacketAssembler.cpp */,
+				EA9920EC1BAB118C000F3C2B /* PacketAssembler.h */,
 			);
 			path = net;
 			sourceTree = "<group>";
@@ -772,6 +782,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA9920EA1BAB10F3000F3C2B /* CRingBuf.cpp in Sources */,
 				509D4AC917EBB2AB00697056 /* RootViewController.mm in Sources */,
 				EA89A0D81BA714A50083BA20 /* NativeHelper.cpp in Sources */,
 				9D007CB71BA93F7B00B26592 /* GameSocket.cpp in Sources */,
@@ -779,6 +790,7 @@
 				D4545227156E28EF00887EB5 /* AppDelegate.cpp in Sources */,
 				EA89A0B41BA709D80083BA20 /* ODSocket.cpp in Sources */,
 				509D4AC817EBB2AB00697056 /* main.m in Sources */,
+				EA9920ED1BAB118C000F3C2B /* PacketAssembler.cpp in Sources */,
 				509D4ABC17EBB2AB00697056 /* AppController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

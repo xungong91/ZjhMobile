@@ -15,6 +15,9 @@
         "src/app.js",
         "src/appbundle.js",
         "src/bundle.js",
-        "src/tools/md5.js"
+        "src/tools/md5.js",
+        "src/net/messageManager.js",
+        "src/net/baseMessageHandler.js",
+        "src/net/LoginFromHTTPRequestHandler.js"
     ]
 }

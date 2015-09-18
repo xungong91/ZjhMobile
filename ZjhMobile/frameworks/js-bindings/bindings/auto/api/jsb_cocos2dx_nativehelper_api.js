@@ -9,6 +9,58 @@ var cc = cc || {};
 cc.NativeHelper = {
 
 /**
+ * @method startSendMsg
+ */
+startSendMsg : function (
+)
+{
+},
+
+/**
+ * @method setPacketAssembler
+ * @param {function} arg0
+ */
+setPacketAssembler : function (
+func 
+)
+{
+},
+
+/**
+ * @method getMsg
+ * @return {cc.MessageStruct}
+ */
+getMsg : function (
+)
+{
+    return cc.MessageStruct;
+},
+
+/**
+ * @method setCallBack
+ * @param {function} arg0
+ */
+setCallBack : function (
+func 
+)
+{
+},
+
+/**
+ * @method sendJsMsg
+ * @param {String} arg0
+ * @param {int} arg1
+ * @return {bool}
+ */
+sendJsMsg : function (
+str, 
+int 
+)
+{
+    return false;
+},
+
+/**
  * @method test
  * @return {String}
  */
@@ -19,45 +71,13 @@ test : function (
 },
 
 /**
- * @method setCallFunc
- * @param {function} arg0
+ * @method setMsg
+ * @param {cc.MessageStruct} arg0
  */
-setCallFunc : function (
-func 
+setMsg : function (
+messagestruct 
 )
 {
-},
-
-/**
- * @method testSend1
- * @param {char} arg0
- */
-testSend1 : function (
-char 
-)
-{
-},
-
-/**
- * @method testSend
- * @param {String} arg0
- */
-testSend : function (
-str 
-)
-{
-},
-
-/**
- * @method codeData
- * @param {String} arg0
- * @return {String}
- */
-codeData : function (
-str 
-)
-{
-    return ;
 },
 
 /**

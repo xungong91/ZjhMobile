@@ -11,26 +11,43 @@
 
 #include "cocos2d.h"
 #include <functional>
+#include <vector>
+#include <list>
 
 using namespace std;
 
 namespace cocos2d
 {
+    struct MessageStruct
+    {
+        string base64;
+        int msgId;
+    };
+    
     class NativeHelper
     {
     public:
         static NativeHelper *singleton();
         
         string test();
-        void testSend(string buffer);
-        void testSend1(const char *data);
         
-        void setCallFunc(function<void (string)> callFunc);
+        void setPacketAssembler(function<void (string, int)> msgCallBack);
         
-        //简单加密
-        string codeData(string code);
+        void setCallBack(function<void ()> callBack);
+        
+        //start
+        void startSendMsg();
+        
+        //发送
+        bool sendJsMsg(string msg, int msgId);
+        
+        //读取msg
+        MessageStruct getMsg();
+        void setMsg(MessageStruct msg);
     private:
-        function<void (string)> mCallFunc;
+        function<void (string, int)> mMsgCallBack;
+        function<void ()> mCallBack;
+        list<MessageStruct> mMsgs;
         
         static NativeHelper *mNativeHelper;
         NativeHelper();
