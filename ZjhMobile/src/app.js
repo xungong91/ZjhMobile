@@ -31,7 +31,11 @@ var HelloWorldLayer = cc.Layer.extend({
         menu2.setFontSize(20);
         menu2.setPosition(0, 50);
 
-        var menu = new cc.Menu(menu1, menu2);
+        var menu3 = new cc.MenuItemFont("打开扎金花界面", this.openZjhLayer, this);
+        menu3.setFontSize(20);
+        menu3.setPosition(0, 100);
+
+        var menu = new cc.Menu(menu1, menu2, menu3);
         this.addChild(menu);
 
 
@@ -46,8 +50,11 @@ var HelloWorldLayer = cc.Layer.extend({
         mo.nativeHelper.startSendMsg();
     },
     sendMsg : function(sender){
-
         mo.messageManager.sendLoLoginFromHTTP("8c53d6a1d685c72414d655d21f6c43c5");
+    },
+    openZjhLayer : function(sender){
+        this.getParent().addChild(new ZjhTableLayer());
+        this.getParent().removeChild(this);
     }
 });
 
@@ -56,6 +63,8 @@ var HelloWorldScene = cc.Scene.extend({
         this._super();
         var layer = new HelloWorldLayer();
         this.addChild(layer);
+
+        mo.mainZjhScene = this;
     }
 });
 

@@ -1,0 +1,22 @@
+<Solution>
+  <PropertyGroup Name="ZjhMobileUI" Version="2.3.2.3" Type="CocosStudio" />
+  <SolutionFolder>
+    <Group ctype="ResourceGroup">
+      <RootFolder Name=".">
+        <Image Name="bg.png" />
+        <Image Name="bg_table.png" />
+        <Project Name="ccs_zjhTableLayer.csd" Type="Layer" />
+        <Folder Name="button">
+          <Image Name="button_setting1.png" />
+          <Image Name="button_setting2.png" />
+        </Folder>
+        <Folder Name="ui">
+          <Image Name="headBg1.png" />
+          <Image Name="headBg2.png" />
+          <Image Name="headBg3.png" />
+        </Folder>
+        <Project Name="ccs_zjhHeadWidget.csd" Type="Layer" />
+      </RootFolder>
+    </Group>
+  </SolutionFolder>
+</Solution>

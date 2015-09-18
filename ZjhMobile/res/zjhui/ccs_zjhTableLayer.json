@@ -1,0 +1,565 @@
+{
+  "ID": "1436da9d-d2c9-4a90-83b6-efcf82688fe2",
+  "Version": "2.3.2.3",
+  "Name": "ccs_zjhTableLayer",
+  "Content": {
+    "Content": {
+      "Animation": {
+        "Duration": 0,
+        "Speed": 1.0,
+        "Timelines": [],
+        "ctype": "TimelineActionData"
+      },
+      "AnimationList": [],
+      "ObjectData": {
+        "Tag": 3,
+        "Children": [
+          {
+            "FileData": {
+              "Type": "Normal",
+              "Path": "bg.png",
+              "Plist": ""
+            },
+            "Scale9Width": 960,
+            "Scale9Height": 640,
+            "StretchWidthEnable": true,
+            "StretchHeightEnable": true,
+            "AnchorPoint": {
+              "ScaleX": 0.5,
+              "ScaleY": 0.5
+            },
+            "Position": {
+              "X": 480.0,
+              "Y": 320.0
+            },
+            "Scale": {
+              "ScaleX": 1.0,
+              "ScaleY": 1.0
+            },
+            "CColor": {},
+            "IconVisible": false,
+            "PrePosition": {
+              "X": 0.5,
+              "Y": 0.5
+            },
+            "PreSize": {
+              "X": 1.0,
+              "Y": 1.0
+            },
+            "HorizontalEdge": "BothEdge",
+            "VerticalEdge": "BothEdge",
+            "Tag": 5,
+            "ActionTag": -840991835,
+            "Size": {
+              "X": 960.0,
+              "Y": 640.0
+            },
+            "Name": "Image_bg",
+            "ctype": "ImageViewObjectData"
+          },
+          {
+            "BackColorAlpha": 102,
+            "ComboBoxIndex": 1,
+            "SingleColor": {
+              "R": 150,
+              "G": 200
+            },
+            "FirstColor": {
+              "R": 150,
+              "G": 200
+            },
+            "EndColor": {},
+            "ColorVector": {
+              "ScaleY": 1.0
+            },
+            "AnchorPoint": {},
+            "Position": {
+              "X": 480.0,
+              "Y": 320.0
+            },
+            "Scale": {
+              "ScaleX": 1.0,
+              "ScaleY": 1.0
+            },
+            "CColor": {},
+            "IconVisible": false,
+            "PrePosition": {
+              "X": 0.5,
+              "Y": 0.5
+            },
+            "PreSize": {
+              "X": 0.001,
+              "Y": 0.0016
+            },
+            "HorizontalEdge": "BothEdge",
+            "VerticalEdge": "BothEdge",
+            "LeftMargin": 480.0,
+            "RightMargin": 479.0,
+            "TopMargin": 319.0,
+            "BottomMargin": 320.0,
+            "Tag": 4,
+            "Children": [
+              {
+                "FileData": {
+                  "Type": "Normal",
+                  "Path": "bg_table.png",
+                  "Plist": ""
+                },
+                "Scale9Width": 892,
+                "Scale9Height": 520,
+                "AnchorPoint": {
+                  "ScaleX": 0.5,
+                  "ScaleY": 0.5
+                },
+                "Position": {
+                  "X": 0.0,
+                  "Y": 0.0
+                },
+                "Scale": {
+                  "ScaleX": 1.0,
+                  "ScaleY": 1.0
+                },
+                "CColor": {},
+                "IconVisible": false,
+                "PrePosition": {
+                  "X": 0.0,
+                  "Y": 0.0
+                },
+                "PreSize": {
+                  "X": 892.0,
+                  "Y": 520.0
+                },
+                "LeftMargin": -446.0,
+                "RightMargin": -445.0,
+                "TopMargin": -259.0,
+                "BottomMargin": -260.0,
+                "Tag": 6,
+                "ActionTag": -1025481973,
+                "Size": {
+                  "X": 892.0,
+                  "Y": 520.0
+                },
+                "Name": "Image_tableBg",
+                "ctype": "ImageViewObjectData"
+              },
+              {
+                "BackColorAlpha": 102,
+                "SingleColor": {
+                  "R": 150,
+                  "G": 200
+                },
+                "FirstColor": {
+                  "R": 150,
+                  "G": 200
+                },
+                "EndColor": {},
+                "ColorVector": {
+                  "ScaleY": 1.0
+                },
+                "AnchorPoint": {},
+                "Position": {
+                  "X": 0.0,
+                  "Y": 0.0
+                },
+                "Scale": {
+                  "ScaleX": 1.0,
+                  "ScaleY": 1.0
+                },
+                "CColor": {},
+                "IconVisible": false,
+                "PrePosition": {
+                  "X": 0.0,
+                  "Y": 0.0
+                },
+                "PreSize": {
+                  "X": 1.0,
+                  "Y": 1.0
+                },
+                "Tag": 10,
+                "Children": [
+                  {
+                    "FileData": {
+                      "Type": "Normal",
+                      "Path": "ui/headBg1.png",
+                      "Plist": ""
+                    },
+                    "Scale9Width": 121,
+                    "Scale9Height": 154,
+                    "AnchorPoint": {
+                      "ScaleX": 0.5,
+                      "ScaleY": 0.5
+                    },
+                    "Position": {
+                      "X": 0.0,
+                      "Y": 0.0
+                    },
+                    "Scale": {
+                      "ScaleX": 1.0,
+                      "ScaleY": 1.0
+                    },
+                    "CColor": {},
+                    "IconVisible": false,
+                    "PrePosition": {
+                      "X": 0.0,
+                      "Y": 0.0
+                    },
+                    "PreSize": {
+                      "X": 0.605,
+                      "Y": 0.77
+                    },
+                    "LeftMargin": -60.5,
+                    "RightMargin": 139.5,
+                    "TopMargin": 123.0,
+                    "BottomMargin": -77.0,
+                    "Tag": 11,
+                    "ActionTag": 210352744,
+                    "Size": {
+                      "X": 121.0,
+                      "Y": 154.0
+                    },
+                    "Name": "Image_3",
+                    "ctype": "ImageViewObjectData"
+                  },
+                  {
+                    "FileData": {
+                      "Type": "Normal",
+                      "Path": "ui/headBg2.png",
+                      "Plist": ""
+                    },
+                    "Scale9Width": 120,
+                    "Scale9Height": 152,
+                    "AnchorPoint": {
+                      "ScaleX": 0.5,
+                      "ScaleY": 0.5
+                    },
+                    "Position": {
+                      "X": 0.0,
+                      "Y": 0.0
+                    },
+                    "Scale": {
+                      "ScaleX": 1.0,
+                      "ScaleY": 1.0
+                    },
+                    "CColor": {},
+                    "IconVisible": false,
+                    "PrePosition": {
+                      "X": 0.0,
+                      "Y": 0.0
+                    },
+                    "PreSize": {
+                      "X": 0.6,
+                      "Y": 0.76
+                    },
+                    "LeftMargin": -60.0,
+                    "RightMargin": 140.0,
+                    "TopMargin": 124.0,
+                    "BottomMargin": -76.0,
+                    "Tag": 12,
+                    "ActionTag": -313898302,
+                    "Size": {
+                      "X": 120.0,
+                      "Y": 152.0
+                    },
+                    "Name": "Image_4",
+                    "ctype": "ImageViewObjectData"
+                  }
+                ],
+                "ActionTag": 576922210,
+                "Size": {
+                  "X": 1.0,
+                  "Y": 1.0
+                },
+                "Name": "Panel_3",
+                "ctype": "PanelObjectData"
+              },
+              {
+                "BackColorAlpha": 102,
+                "SingleColor": {
+                  "R": 150,
+                  "G": 200
+                },
+                "FirstColor": {
+                  "R": 150,
+                  "G": 200
+                },
+                "EndColor": {},
+                "ColorVector": {
+                  "ScaleY": 1.0
+                },
+                "AnchorPoint": {},
+                "Position": {
+                  "X": 300.0,
+                  "Y": -10.0
+                },
+                "Scale": {
+                  "ScaleX": 1.0,
+                  "ScaleY": 1.0
+                },
+                "CColor": {},
+                "IconVisible": false,
+                "PrePosition": {
+                  "X": 300.0,
+                  "Y": -10.0
+                },
+                "PreSize": {
+                  "X": 1.0,
+                  "Y": 1.0
+                },
+                "LeftMargin": 300.0,
+                "RightMargin": -300.0,
+                "TopMargin": 10.0,
+                "BottomMargin": -10.0,
+                "Tag": 13,
+                "Children": [
+                  {
+                    "FileData": {
+                      "Type": "Normal",
+                      "Path": "ui/headBg1.png",
+                      "Plist": ""
+                    },
+                    "Scale9Width": 121,
+                    "Scale9Height": 154,
+                    "AnchorPoint": {
+                      "ScaleX": 0.5,
+                      "ScaleY": 0.5
+                    },
+                    "Position": {
+                      "X": 0.0,
+                      "Y": 0.0
+                    },
+                    "Scale": {
+                      "ScaleX": 1.0,
+                      "ScaleY": 1.0
+                    },
+                    "CColor": {},
+                    "IconVisible": false,
+                    "PrePosition": {
+                      "X": 0.0,
+                      "Y": 0.0
+                    },
+                    "PreSize": {
+                      "X": 0.605,
+                      "Y": 0.77
+                    },
+                    "LeftMargin": -60.5,
+                    "RightMargin": 139.5,
+                    "TopMargin": 123.0,
+                    "BottomMargin": -77.0,
+                    "Tag": 14,
+                    "ActionTag": -1787427388,
+                    "Size": {
+                      "X": 121.0,
+                      "Y": 154.0
+                    },
+                    "Name": "Image_3",
+                    "ctype": "ImageViewObjectData"
+                  },
+                  {
+                    "FileData": {
+                      "Type": "Normal",
+                      "Path": "ui/headBg2.png",
+                      "Plist": ""
+                    },
+                    "Scale9Width": 120,
+                    "Scale9Height": 152,
+                    "AnchorPoint": {
+                      "ScaleX": 0.5,
+                      "ScaleY": 0.5
+                    },
+                    "Position": {
+                      "X": 0.0,
+                      "Y": 0.0
+                    },
+                    "Scale": {
+                      "ScaleX": 1.0,
+                      "ScaleY": 1.0
+                    },
+                    "CColor": {},
+                    "IconVisible": false,
+                    "PrePosition": {
+                      "X": 0.0,
+                      "Y": 0.0
+                    },
+                    "PreSize": {
+                      "X": 0.6,
+                      "Y": 0.76
+                    },
+                    "LeftMargin": -60.0,
+                    "RightMargin": 140.0,
+                    "TopMargin": 124.0,
+                    "BottomMargin": -76.0,
+                    "Tag": 15,
+                    "ActionTag": 1345604261,
+                    "Size": {
+                      "X": 120.0,
+                      "Y": 152.0
+                    },
+                    "VisibleForFrame": false,
+                    "Name": "Image_4",
+                    "ctype": "ImageViewObjectData"
+                  }
+                ],
+                "ActionTag": 25755961,
+                "Size": {
+                  "X": 1.0,
+                  "Y": 1.0
+                },
+                "Name": "Panel_3_0",
+                "ctype": "PanelObjectData"
+              }
+            ],
+            "ActionTag": 532342960,
+            "Size": {
+              "X": 1.0,
+              "Y": 1.0
+            },
+            "Name": "Panel_Fixed",
+            "ctype": "PanelObjectData"
+          },
+          {
+            "BackColorAlpha": 102,
+            "SingleColor": {
+              "R": 150,
+              "G": 200
+            },
+            "FirstColor": {
+              "R": 150,
+              "G": 200
+            },
+            "EndColor": {},
+            "ColorVector": {
+              "ScaleY": 1.0
+            },
+            "AnchorPoint": {},
+            "Position": {
+              "X": 960.0,
+              "Y": 640.0
+            },
+            "Scale": {
+              "ScaleX": 1.0,
+              "ScaleY": 1.0
+            },
+            "CColor": {},
+            "IconVisible": false,
+            "PrePosition": {
+              "X": 1.0,
+              "Y": 1.0
+            },
+            "PreSize": {
+              "X": 0.001,
+              "Y": 0.0016
+            },
+            "HorizontalEdge": "RightEdge",
+            "VerticalEdge": "TopEdge",
+            "LeftMargin": 960.0,
+            "RightMargin": -1.0,
+            "TopMargin": -1.0,
+            "BottomMargin": 640.0,
+            "Tag": 8,
+            "Children": [
+              {
+                "FontSize": 14,
+                "ButtonText": "",
+                "TextColor": {
+                  "R": 65,
+                  "G": 65,
+                  "B": 70
+                },
+                "DisabledFileData": {
+                  "Type": "Default",
+                  "Path": "Default/Button_Disable.png",
+                  "Plist": ""
+                },
+                "PressedFileData": {
+                  "Type": "Normal",
+                  "Path": "button/button_setting2.png",
+                  "Plist": ""
+                },
+                "NormalFileData": {
+                  "Type": "Normal",
+                  "Path": "button/button_setting1.png",
+                  "Plist": ""
+                },
+                "Scale9Enable": true,
+                "Scale9OriginX": 15,
+                "Scale9OriginY": 11,
+                "Scale9Width": 68,
+                "Scale9Height": 45,
+                "OutlineColor": {
+                  "G": 0,
+                  "B": 0
+                },
+                "ShadowColor": {
+                  "R": 110,
+                  "G": 110,
+                  "B": 110
+                },
+                "ShadowOffsetX": 2.0,
+                "ShadowOffsetY": -2.0,
+                "TouchEnable": true,
+                "AnchorPoint": {
+                  "ScaleX": 0.5,
+                  "ScaleY": 0.5
+                },
+                "Position": {
+                  "X": -70.0,
+                  "Y": -60.0
+                },
+                "Scale": {
+                  "ScaleX": 1.0,
+                  "ScaleY": 1.0
+                },
+                "CColor": {},
+                "IconVisible": false,
+                "PrePosition": {
+                  "X": -70.0,
+                  "Y": -60.0
+                },
+                "PreSize": {
+                  "X": 98.0,
+                  "Y": 67.0
+                },
+                "LeftMargin": -119.0,
+                "RightMargin": 22.0,
+                "TopMargin": 27.5,
+                "BottomMargin": -93.5,
+                "Tag": 9,
+                "ActionTag": -685154655,
+                "Size": {
+                  "X": 98.0,
+                  "Y": 67.0
+                },
+                "Name": "Button_setting",
+                "ctype": "ButtonObjectData"
+              }
+            ],
+            "ActionTag": 2009782084,
+            "Size": {
+              "X": 1.0,
+              "Y": 1.0
+            },
+            "Name": "Panel_rightTop",
+            "ctype": "PanelObjectData"
+          }
+        ],
+        "Size": {
+          "X": 960.0,
+          "Y": 640.0
+        },
+        "Name": "Layer",
+        "ctype": "LayerObjectData"
+      },
+      "UsedResources": [
+        "bg.png",
+        "bg_table.png",
+        "button/button_setting1.png",
+        "button/button_setting2.png",
+        "Default/Button_Disable.png",
+        "ui/headBg1.png",
+        "ui/headBg2.png"
+      ],
+      "ctype": "GameProjectData"
+    }
+  },
+  "Type": "Layer"
+}
