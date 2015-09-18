@@ -99,6 +99,8 @@
 		D454520C156E22BD00887EB5 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D454520B156E22BD00887EB5 /* libz.dylib */; };
 		D4545227156E28EF00887EB5 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4545215156E28EF00887EB5 /* AppDelegate.cpp */; };
 		D6B061241803AB9F0077942B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B061231803AB9F0077942B /* CoreMotion.framework */; };
+		EA62B7CA1BABBB85002EB481 /* MessageNotifycation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EA62B7C81BABBB85002EB481 /* MessageNotifycation.cpp */; };
+		EA62B7CD1BABBEA8002EB481 /* CNotificationQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EA62B7CB1BABBEA8002EB481 /* CNotificationQueue.cpp */; };
 		EA89A0B41BA709D80083BA20 /* ODSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EA89A0B21BA709D80083BA20 /* ODSocket.cpp */; };
 		EA89A0D41BA714980083BA20 /* jsb_cocos2dx_nativehelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EA89A0D21BA714980083BA20 /* jsb_cocos2dx_nativehelper.cpp */; };
 		EA89A0D81BA714A50083BA20 /* NativeHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EA89A0D61BA714A50083BA20 /* NativeHelper.cpp */; };
@@ -258,6 +260,10 @@
 		D4545215156E28EF00887EB5 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		D4545216156E28EF00887EB5 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		D6B061231803AB9F0077942B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
+		EA62B7C81BABBB85002EB481 /* MessageNotifycation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MessageNotifycation.cpp; sourceTree = "<group>"; };
+		EA62B7C91BABBB85002EB481 /* MessageNotifycation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageNotifycation.h; sourceTree = "<group>"; };
+		EA62B7CB1BABBEA8002EB481 /* CNotificationQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CNotificationQueue.cpp; sourceTree = "<group>"; };
+		EA62B7CC1BABBEA8002EB481 /* CNotificationQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CNotificationQueue.h; sourceTree = "<group>"; };
 		EA89A0B21BA709D80083BA20 /* ODSocket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ODSocket.cpp; sourceTree = "<group>"; };
 		EA89A0B31BA709D80083BA20 /* ODSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ODSocket.h; sourceTree = "<group>"; };
 		EA89A0D21BA714980083BA20 /* jsb_cocos2dx_nativehelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsb_cocos2dx_nativehelper.cpp; path = "../../js-bindings/bindings/auto/jsb_cocos2dx_nativehelper.cpp"; sourceTree = "<group>"; };
@@ -582,14 +588,18 @@
 		EA89A0B11BA709D80083BA20 /* net */ = {
 			isa = PBXGroup;
 			children = (
-				EA9920E81BAB10F3000F3C2B /* CRingBuf.cpp */,
-				EA9920E91BAB10F3000F3C2B /* CRingBuf.h */,
 				EA89A0B21BA709D80083BA20 /* ODSocket.cpp */,
 				EA89A0B31BA709D80083BA20 /* ODSocket.h */,
 				9D007CB51BA93F7B00B26592 /* GameSocket.cpp */,
 				9D007CB61BA93F7B00B26592 /* GameSocket.h */,
 				EA9920EB1BAB118C000F3C2B /* PacketAssembler.cpp */,
 				EA9920EC1BAB118C000F3C2B /* PacketAssembler.h */,
+				EA9920E81BAB10F3000F3C2B /* CRingBuf.cpp */,
+				EA9920E91BAB10F3000F3C2B /* CRingBuf.h */,
+				EA62B7C81BABBB85002EB481 /* MessageNotifycation.cpp */,
+				EA62B7C91BABBB85002EB481 /* MessageNotifycation.h */,
+				EA62B7CB1BABBEA8002EB481 /* CNotificationQueue.cpp */,
+				EA62B7CC1BABBEA8002EB481 /* CNotificationQueue.h */,
 			);
 			path = net;
 			sourceTree = "<group>";
@@ -788,8 +798,10 @@
 				9D007CB71BA93F7B00B26592 /* GameSocket.cpp in Sources */,
 				EA89A0D41BA714980083BA20 /* jsb_cocos2dx_nativehelper.cpp in Sources */,
 				D4545227156E28EF00887EB5 /* AppDelegate.cpp in Sources */,
+				EA62B7CD1BABBEA8002EB481 /* CNotificationQueue.cpp in Sources */,
 				EA89A0B41BA709D80083BA20 /* ODSocket.cpp in Sources */,
 				509D4AC817EBB2AB00697056 /* main.m in Sources */,
+				EA62B7CA1BABBB85002EB481 /* MessageNotifycation.cpp in Sources */,
 				EA9920ED1BAB118C000F3C2B /* PacketAssembler.cpp in Sources */,
 				509D4ABC17EBB2AB00697056 /* AppController.mm in Sources */,
 			);

@@ -153,13 +153,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "../../js-bindings/cocos2d-x/cocos/my/NativeHelper.cpp"
-            timestampString = "464204676.064563"
+            filePath = "../Classes/net/MessageNotifycation.cpp"
+            timestampString = "464252896.757263"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "60"
-            endingLineNumber = "60"
-            landmarkName = "NativeHelper::getMsg()"
+            startingLineNumber = "64"
+            endingLineNumber = "64"
+            landmarkName = "MessageNotifycation::setMsg(MessageStruct msg)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -169,13 +169,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "../../js-bindings/cocos2d-x/cocos/my/NativeHelper.cpp"
-            timestampString = "464200820.075906"
+            filePath = "../Classes/net/MessageNotifycation.cpp"
+            timestampString = "464252896.757263"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "43"
-            endingLineNumber = "43"
-            landmarkName = "NativeHelper::test()"
+            startingLineNumber = "37"
+            endingLineNumber = "37"
+            landmarkName = "MessageNotifycation::stratSendCB()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -185,13 +185,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "../../js-bindings/cocos2d-x/cocos/my/NativeHelper.cpp"
-            timestampString = "464237978.821462"
+            filePath = "../Classes/net/MessageNotifycation.cpp"
+            timestampString = "464252896.757263"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "79"
-            endingLineNumber = "79"
-            landmarkName = "NativeHelper::startSendMsg()"
+            startingLineNumber = "54"
+            endingLineNumber = "54"
+            landmarkName = "MessageNotifycation::getMsg()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

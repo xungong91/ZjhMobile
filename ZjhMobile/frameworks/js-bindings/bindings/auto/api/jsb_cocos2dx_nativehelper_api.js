@@ -9,6 +9,20 @@ var cc = cc || {};
 cc.NativeHelper = {
 
 /**
+ * @method recvJsMsg
+ * @param {String} arg0
+ * @param {int} arg1
+ * @return {bool}
+ */
+recvJsMsg : function (
+str, 
+int 
+)
+{
+    return false;
+},
+
+/**
  * @method startSendMsg
  */
 startSendMsg : function (
@@ -24,16 +38,6 @@ setPacketAssembler : function (
 func 
 )
 {
-},
-
-/**
- * @method getMsg
- * @return {cc.MessageStruct}
- */
-getMsg : function (
-)
-{
-    return cc.MessageStruct;
 },
 
 /**
@@ -68,16 +72,6 @@ test : function (
 )
 {
     return ;
-},
-
-/**
- * @method setMsg
- * @param {cc.MessageStruct} arg0
- */
-setMsg : function (
-messagestruct 
-)
-{
 },
 
 /**

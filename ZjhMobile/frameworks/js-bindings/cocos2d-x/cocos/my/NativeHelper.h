@@ -18,12 +18,6 @@ using namespace std;
 
 namespace cocos2d
 {
-    struct MessageStruct
-    {
-        string base64;
-        int msgId;
-    };
-    
     class NativeHelper
     {
     public:
@@ -31,23 +25,44 @@ namespace cocos2d
         
         string test();
         
-        void setPacketAssembler(function<void (string, int)> msgCallBack);
-        
         void setCallBack(function<void ()> callBack);
         
-        //start
+        /**
+         *  c++传递收到的消息到js
+         *
+         *  @param string base64编码的message
+         *  @param int    messageId
+         */
+        void setPacketAssembler(function<void (string, int)> msgCallBack);
+        
+        /**
+         *  启动消息发送器
+         */
         void startSendMsg();
         
-        //发送
+        /**
+         *  发送socket消息
+         *
+         *  @param msg   message二进制
+         *  @param msgId messageid
+         *
+         *  @return 是否发送成功
+         */
         bool sendJsMsg(string msg, int msgId);
         
-        //读取msg
-        MessageStruct getMsg();
-        void setMsg(MessageStruct msg);
+        /**
+         *  接受到了消息交给js解析
+         *
+         *  @param base64 string
+         *  @param msgId  id
+         *
+         *  @return 是否发送成功
+         */
+        bool recvJsMsg(string base64, int msgId);
+        
     private:
         function<void (string, int)> mMsgCallBack;
         function<void ()> mCallBack;
-        list<MessageStruct> mMsgs;
         
         static NativeHelper *mNativeHelper;
         NativeHelper();

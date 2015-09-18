@@ -7,7 +7,7 @@
 //
 
 #include "PacketAssembler.h"
-#include "NativeHelper.h"
+#include "MessageNotifycation.h"
 
 PacketAssembler *PacketAssembler::mPacketAssembler = nullptr;
 
@@ -24,7 +24,7 @@ PacketAssembler::PacketAssembler()
 
 PacketAssembler::~PacketAssembler()
 {
-    
+    mPacketAssembler = nullptr;
 }
 
 PacketAssembler *PacketAssembler::singleton()
@@ -135,8 +135,8 @@ bool PacketAssembler::toMessage( string piece, int &used)
     char *buffer;
     cocos2d::base64Encode((unsigned char*)strmsg.c_str(), (unsigned int)strmsg.size(), &buffer);
     string s(buffer);
-    cocos2d::MessageStruct msgStruct = {s, pkyType};
-    cocos2d::NativeHelper::singleton()->setMsg(msgStruct);
+    MessageStruct msgStruct = {s, pkyType};
+    MessageNotifycation::singleton()->setMsg(msgStruct);
     
     return true;
 }

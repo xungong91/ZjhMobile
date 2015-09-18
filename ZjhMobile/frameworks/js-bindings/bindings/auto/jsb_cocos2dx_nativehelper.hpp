@@ -12,13 +12,12 @@ bool js_cocos2dx_nativehelper_NativeHelper_constructor(JSContext *cx, uint32_t a
 void js_cocos2dx_nativehelper_NativeHelper_finalize(JSContext *cx, JSObject *obj);
 void js_register_cocos2dx_nativehelper_NativeHelper(JSContext *cx, JS::HandleObject global);
 void register_all_cocos2dx_nativehelper(JSContext* cx, JS::HandleObject obj);
+bool js_cocos2dx_nativehelper_NativeHelper_recvJsMsg(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_nativehelper_NativeHelper_startSendMsg(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_nativehelper_NativeHelper_setPacketAssembler(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_nativehelper_NativeHelper_getMsg(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_nativehelper_NativeHelper_setCallBack(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_nativehelper_NativeHelper_sendJsMsg(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_nativehelper_NativeHelper_test(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_nativehelper_NativeHelper_setMsg(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_nativehelper_NativeHelper_singleton(JSContext *cx, uint32_t argc, jsval *vp);
 #endif
 

@@ -9,6 +9,7 @@
 #include "NativeHelper.h"
 #include "GameSocket.h"
 #include "PacketAssembler.h"
+#include "MessageNotifycation.h"
 
 USING_NS_CC;
 
@@ -39,8 +40,6 @@ NativeHelper *NativeHelper::singleton()
 std::string NativeHelper::test()
 {
     GameSocket::GetSingleton()->test();
-//    vector<int> a = {1, 2, 3, 4, 5, 6};
-//    setMsg(a);
     
     return "test msg";
 }
@@ -55,35 +54,24 @@ void NativeHelper::setCallBack(function<void ()> callBack)
     mCallBack = callBack;
 }
 
-MessageStruct NativeHelper::getMsg()
-{
-    MessageStruct temp = mMsgs.front();
-    mMsgs.pop_front();
-    return temp;
-}
-
-void NativeHelper::setMsg(MessageStruct msg)
-{
-    mMsgs.push_back(msg);
-}
-
 void NativeHelper::startSendMsg()
 {
-    Director::getInstance()->getRunningScene()->schedule
-    ([this](float dt)
-    {
-        if (mMsgCallBack && mMsgs.size() > 0)
-        {
-//            mMsgCallBack();
-            MessageStruct msg = getMsg();
-            mMsgCallBack(msg.base64, msg.msgId);
-        }
-    }, 0.1f, "startSendMsg");
+    MessageNotifycation::singleton()->stratSendCB();
 }
 
 bool NativeHelper::sendJsMsg(string msg, int msgId)
 {
     return GameSocket::GetSingleton()->sendJsMsg(msg, msgId);
+}
+
+bool NativeHelper::recvJsMsg(string base64, int msgId)
+{
+    if (mMsgCallBack)
+    {
+        mMsgCallBack(base64, msgId);
+        return true;
+    }
+    return false;
 }
 
 
