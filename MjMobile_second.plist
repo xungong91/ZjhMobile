@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>items</key>
+	<array>
+		<dict>
+			<key>assets</key>
+			<array>
+				<dict>
+					<key>kind</key>
+					<string>display-image</string>
+					<key>needs-shine</key>
+					<true/>
+					<key>url</key>
+					<string>http://192.168.2.24/ios299/Icon.png</string>
+				</dict>
+				<dict>
+					<key>kind</key>
+					<string>software-package</string>
+					<key>url</key>
+					<string>http://192.168.2.24/ios299/MjMobile_second.ipa</string>
+				</dict>
+			</array>
+			<key>metadata</key>
+			<dict>
+				<key>bundle-identifier</key>
+				<string>com.16youxiC.MjMobile</string>
+				<key>bundle-version</key>
+				<string>1.4.6</string>
+				<key>kind</key>
+				<string>software</string>
+				<key>title</key>
+				<string>The Title To Present To The User installing the app</string>
+			</dict>
+		</dict>
+	</array>
+</dict>
+</plist>
