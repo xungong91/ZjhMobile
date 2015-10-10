@@ -50,7 +50,8 @@ var HelloWorldLayer = cc.Layer.extend({
         mo.nativeHelper.startSendMsg();
     },
     sendMsg : function(sender){
-        mo.messageManager.sendLoLoginFromHTTP("8c53d6a1d685c72414d655d21f6c43c5");
+        //mo.messageManager.sendLoLoginFromHTTP("8c53d6a1d685c72414d655d21f6c43c5");
+        mo.messageManager.sendJoinFreeZJH(0, 0);
     },
     openZjhLayer : function(sender){
         this.getParent().addChild(new ZjhTableLayer());

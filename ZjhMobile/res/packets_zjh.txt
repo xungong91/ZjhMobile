@@ -109,9 +109,13 @@ enum CurrencyType {
 	ItemVip4    = 504; // vip4购买  id 504
 	ItemVip5    = 505; // vip5购买  id 505
 	ItemVip6    = 506; // vip6购买  id 506
-
 	ItemEND     = 547; //  end flag 547
 	UnknownItem = 999;
+	ItemChips = 10000;//筹码 全局
+	ItemZjhGlobalEnd     = 20999; //全局量结束标志
+	itemZjhNoSave        = 22000; //不用保存到数据库的数据
+	ItemZjhOnLineNumItem = 22001; //虚拟在线人数
+	ItemZjhEND           = 29999; //物品结束标志
 }
 
 message InviteStatus{
@@ -263,18 +267,19 @@ message ZJHTableStats{//4
     required ZJHRule Rule = 4;//table规则
     required int32 NextActionTimeOut = 5;//下一个动作需要的时间，比如下一个动作是开局，下一个动作是下一个玩家打牌
 	required int32 round = 6;//圈数，从1开始
-	required int32 NowSeat = 7;//当前玩家座位号 1，2，3，4，5，6
-	required int32 BasePoint = 8;//基本底
-	required int32 NowRoundPoint = 9;//当前底
-	required int32 MoneyOnTable = 10;//桌上当前的总金币/钻石数量 根据该数量，客户端自己绘画桌面筹码
-	required int32 LastAddMoneySeat = 11;//最后一个加跟的玩家的座位号1，2，3，4，5，6
-	required int32 LastActionSeat = 12;//最后一个操作的座位号
-	optional ZJHTableUserStats SeatUser1 = 13;//seat1 用户状态
-	optional ZJHTableUserStats SeatUser2 = 14;//seat2 用户状态
-	optional ZJHTableUserStats SeatUser3 = 15;//seat3 用户状态
-	optional ZJHTableUserStats SeatUser4 = 16;//seat4 用户状态
-	optional ZJHTableUserStats SeatUser5 = 17;//seat5 用户状态
-	optional ZJHTableUserStats SeatUser6 = 18;//seat6 用户状态
+	required int32 MySeat = 7;//玩家自己的座位号
+	required int32 NowSeat = 8;//当前操作玩家座位号 1，2，3，4，5，6
+	required int32 BasePoint = 9;//基本底
+	required int32 NowRoundPoint = 10;//当前底
+	required int32 MoneyOnTable = 11;//桌上当前的总金币/钻石数量 根据该数量，客户端自己绘画桌面筹码
+	required int32 LastAddMoneySeat = 12;//最后一个加跟的玩家的座位号1，2，3，4，5，6
+	required int32 LastActionSeat = 13;//最后一个操作的座位号
+	optional ZJHTableUserStats SeatUser1 = 14;//seat1 用户状态
+	optional ZJHTableUserStats SeatUser2 = 15;//seat2 用户状态
+	optional ZJHTableUserStats SeatUser3 = 16;//seat3 用户状态
+	optional ZJHTableUserStats SeatUser4 = 17;//seat4 用户状态
+	optional ZJHTableUserStats SeatUser5 = 18;//seat5 用户状态
+	optional ZJHTableUserStats SeatUser6 = 19;//seat6 用户状态
 }
 
 //进入牌桌回复
@@ -284,6 +289,7 @@ message JoinFreeZJHResponse {//8
 		MinimumCoinsRequired = 1;
 		MinimumDiamondRequired = 2;
 		NoTableAvail = 3;
+		Other = 4;
 	}
 	required JoinFreeZJHResponseCode code = 1;
 	optional bool reconnected_user = 2;

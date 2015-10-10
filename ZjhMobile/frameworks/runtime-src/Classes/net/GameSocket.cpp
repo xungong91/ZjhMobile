@@ -29,7 +29,7 @@ GameSocket::~GameSocket()
 
 void GameSocket::test()
 {
-    Connect("192.168.2.21", 7999);
+    Connect("192.168.2.21", 6999);
 }
 
 bool GameSocket::sendJsMsg(string msg, int msgId)
@@ -122,7 +122,7 @@ void GameSocket::ReceiveData()
         
         char msg[100];
         sprintf(msg, "收到消息长度是:%d", len);
-        CCLOG(msg);
+        CCLOG("收到消息：%s", msg);
 
         if(len > 0)
         {
